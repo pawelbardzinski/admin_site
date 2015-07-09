@@ -5,18 +5,22 @@ angular.module('app').controller('SessionCtrl', ['$scope', function($scope) {
   var User = Parse.Object.extend("User");
   // var user = new User();
 
-  $scope.user = { signedIn: false}
+  $scope.user = {
+    signedIn: false
+  }
   $scope.disabledButton = false;
+  $scope.facilities = []
 
-  $scope.signInUser = function(){
+  $scope.signInUser = function() {
     $scope.disabledButton = true;
-      Parse.User.logIn($scope.user.username, $scope.user.password, {
+    Parse.User.logIn($scope.user.username, $scope.user.password, {
       success: function(user) {
         $scope.disabledButton = false;
         $scope.error = ""
         $scope.user.currentUser = user._serverData;
-        $scope.success = "You are signed in as " +  $scope.user.currentUser.username
+        $scope.success = "You are signed in as " + $scope.user.currentUser.username
         $scope.user.signedIn = true;
+        $scope.getFacility();
         $scope.$apply();
       },
       error: function(user, error) {
@@ -27,11 +31,30 @@ angular.module('app').controller('SessionCtrl', ['$scope', function($scope) {
       }
     });
 
-
   }
 
-//   var username = "test@test.com"
-//   var password = "lol1234"
+
+  $scope.getFacility = function() {
+
+    var Facility = Parse.Object.extend("Facility");
+    var facility = new Facility();
+
+    facility.fetch({
+      success: function(myObject) {
+        $scope.facilities = (myObject._serverData.results)
+        $scope.$apply();
+          // The object was refreshed successfully.
+      },
+      error: function(myObject, error) {
+        // The object was not refreshed successfully.
+        // error is a Parse.Error with an error code and message.
+      }
+    });
+  }
+
+
+  //   var username = "test@test.com"
+  //   var password = "lol1234"
   // var query = new Parse.Query(User);
   // user.get('oahPf3rd1p')
 

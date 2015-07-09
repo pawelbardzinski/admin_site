@@ -45,5 +45,29 @@
         </ul>
       </div>
     </div>
+    <div class="row">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Negative Notification Threshold</th>
+            <th>Positive Notification Threshold</th>
+            <th>Notifications</th>
+            <th>Object id</th>
+            <th>Created At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="facility in facilities">
+            <td>{{facility.name}}</td>
+            <td>{{facility.negativeNotificationThreshold}}</td>
+            <td>{{facility.positiveNotificationThreshold}}</td>
+            <td>{{facility.notifications}}</td>
+            <td>{{facility.objectId}}</td>
+            <td>{{facility.createdAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
