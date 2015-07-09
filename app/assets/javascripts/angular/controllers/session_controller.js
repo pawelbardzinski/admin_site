@@ -6,10 +6,13 @@ angular.module('app').controller('SessionCtrl', ['$scope', function($scope) {
   // var user = new User();
 
   $scope.user = { signedIn: false}
+  $scope.disabledButton = false;
 
   $scope.signInUser = function(){
+    $scope.disabledButton = true;
       Parse.User.logIn($scope.user.username, $scope.user.password, {
       success: function(user) {
+        $scope.disabledButton = false;
         $scope.error = ""
         $scope.user.currentUser = user._serverData;
         $scope.success = "You are signed in as " +  $scope.user.currentUser.username
@@ -17,6 +20,7 @@ angular.module('app').controller('SessionCtrl', ['$scope', function($scope) {
         $scope.$apply();
       },
       error: function(user, error) {
+        $scope.disabledButton = false;
         $scope.success = ""
         $scope.error = "Invalid username or password"
       }
