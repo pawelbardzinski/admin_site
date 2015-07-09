@@ -1,4 +1,49 @@
 <div ng-controller="SessionCtrl">
-
-siema
+  <div data-alert class="alert-box alert round" ng-show="error">
+    {{error}}
+    <a href="#" class="close">&times;</a>
+  </div>
+  <div data-alert class="alert-box success round" ng-show="success">
+    {{success}}
+  <a href="#" class="close">&times;</a>
+  </div>
+  <div class="large-3 large-centered columns" ng-hide="user.signedIn">
+    <div class="login-box">
+      <div class="row">
+        <div class="large-12 columns">
+          <form ng-submit="signInUser()">
+            <div class="row">
+              <div class="large-12 columns">
+                <input type="text" ng-model="user.username" name="username" placeholder="Username" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-12 columns">
+                <input type="password" ng-model="user.password" name="password" placeholder="Password" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="large-12 large-centered columns">
+                <input type="submit" class="button expand" value="Log In"/>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-show="user.signedIn">
+    <div class='content'>
+      <div class='visible'>
+        <p>
+          Hello
+        </p>
+        <ul>
+          <li>{{user.currentUser.username}}</li>
+          <li>in</li>
+          <li>Staffingwidget app</li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>

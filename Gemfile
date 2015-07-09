@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
 # Use sqlite3 as the database for Active Record
@@ -26,7 +25,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'bcrypt', '~> 3.1.7'
 
 gem 'angularjs-rails'
-
+gem 'foundation-rails'
 gem 'underscore-rails'
 # Use Unicorn as the app server
 # gem 'unicorn'
@@ -35,6 +34,7 @@ gem 'underscore-rails'
 # gem 'capistrano-rails', group: :development
 
 group :development, :test do
+  gem 'thin', '~> 1.6.3'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'pry', '~> 0.10.1'
   # Access an IRB console on exception pages or by using <%= console %> in views
@@ -42,4 +42,11 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  gem 'better_errors'
+  gem 'quiet_assets'
+  gem 'pry-byebug'
+  gem 'pry-rails'
+  gem 'pry-stack_explorer'
+  gem 'pry-doc'
 end
