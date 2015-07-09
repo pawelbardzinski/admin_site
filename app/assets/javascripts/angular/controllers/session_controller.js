@@ -23,6 +23,7 @@ angular.module('app').controller('SessionCtrl', ['$scope', function($scope) {
         $scope.disabledButton = false;
         $scope.success = ""
         $scope.error = "Invalid username or password"
+        $scope.$apply();
       }
     });
 
