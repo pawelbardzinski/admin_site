@@ -7,6 +7,15 @@ body {
   margin: 100px 0;
   padding: 40px 20px 0 20px;
 }
-div.alert-box.round{
+div.alert-box.round {
   margin: 20px;
+}
+#facilites {
+  margin-top: 25px;
+}
+
+span {
+  position: relative;
+  right: -105px;
+  top: 35px;
 }

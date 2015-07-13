@@ -1,5 +1,5 @@
 var app;
-app = angular.module('app', []);
+app = angular.module('app', ['angularSpinner']);
 // app.config(['$httpProvider', function($httpProvider) {
   // var authToken;
   // authToken = $("meta[name=\"csrf-token\"]").attr("content");

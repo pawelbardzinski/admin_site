@@ -1,25 +1,17 @@
-<div ng-controller="SessionCtrl">
-  <div data-alert class="alert-box alert round" ng-show="error">
-    {{error}}
-    <a href="#" class="close">&times;</a>
-  </div>
-  <div data-alert class="alert-box success round" ng-show="success">
-    {{success}}
-  <a href="#" class="close">&times;</a>
-  </div>
-  <div class="large-3 large-centered columns" ng-hide="currentUser">
+<div ng-controller="SessionCtrl" ng-cloak>
+  <div class="large-3 large-centered columns" ng-hide="user.currentUser">
     <div class="login-box">
       <div class="row">
         <div class="large-12 columns">
           <form ng-submit="signInUser()">
             <div class="row">
               <div class="large-12 columns">
-                <input type="text" ng-model="user.username" name="username" placeholder="Username" />
+                <input type="text" ng-model="user.username" name="username" required placeholder="Username" />
               </div>
             </div>
             <div class="row">
               <div class="large-12 columns">
-                <input type="password" ng-model="user.password" name="password" placeholder="Password" />
+                <input type="password" ng-model="user.password" name="password" required placeholder="Password" />
               </div>
             </div>
             <div class="row">
@@ -28,25 +20,16 @@
               </div>
             </div>
           </form>
+          <span ng-show="disabledButton" us-spinner="{radius:5, width:4, length: 12}"></span>
         </div>
       </div>
     </div>
   </div>
-  <div ng-show="currentUser">
-    <div class='content'>
-      <div class='visible'>
-        <p>
-          Hello
-        </p>
-        <ul>
-          <li>{{currentUser.username}}</li>
-          <li>in</li>
-          <li>Staffingwidget app</li>
-        </ul>
-      </div>
-    </div>
+</div>
+<div ng-controller="FacilityCtrl" ng-cloak>
+  <div ng-show="user.currentUser" >
     <div class="row">
-      <table>
+      <table id="facilites">
         <thead>
           <tr>
             <th>Name</th>

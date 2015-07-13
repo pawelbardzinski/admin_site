@@ -1,31 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="app">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Staffingwidget</title>
 
-    <%= stylesheet_link_tag    "application" %>
-    <%= javascript_include_tag "application"%>
-    <%= csrf_meta_tags %>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Staffingwidget</title>
 
-  </head>
+  <%= stylesheet_link_tag "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
 
+</head>
+
+<body ng-controller="ApplicationCtrl">
 
   <nav class="top-bar" data-topbar role="navigation">
     <ul class="title-area">
       <li class="name">
         <h1><a href="#">Staffingwidget</a></h1>
       </li>
-       <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-      <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+      <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+      <li class="toggle-topbar menu-icon">
+        <a href="#">
+          <span>Menu</span>
+        </a>
+      </li>
     </ul>
+    <section class="top-bar-section" ng-show="user.currentUser">
+      <ul class="right">
+        <li><a href="#">You are signed in as: {{user.currentUser.attributes.username}} </a></li>
+        <li class="has-form"><button ng-click="logout()">Logout</button></li>
+      </ul>
+    </section>
   </nav>
 
+  <div data-alert class="alert-box alert round" ng-show="error" ng-cloak>
+    {{error}}
+    <a href="#" class="close">&times;</a>
+  </div>
+  <div data-alert class="alert-box success round" ng-show="success" ng-cloak>
+    {{success}}
+    <a href="#" class="close">&times;</a>
+  </div>
 
-  <body>
 
-    <%= yield %>
+  <%= yield %>
 
-  </body>
+</body>
+
 </html>
