@@ -10,6 +10,8 @@ angular.module('app').controller('SessionCtrl', ['$scope', function($scope) {
   }
   $scope.disabledButton = false;
   $scope.facilities = []
+  $scope.currentUser = Parse.User.current();
+
 
   $scope.signInUser = function() {
     $scope.disabledButton = true;
@@ -34,8 +36,8 @@ angular.module('app').controller('SessionCtrl', ['$scope', function($scope) {
   }
 
 
-  $scope.getFacility = function() {
 
+  $scope.getFacility = function() {
     var Facility = Parse.Object.extend("Facility");
     var facility = new Facility();
 
@@ -43,7 +45,7 @@ angular.module('app').controller('SessionCtrl', ['$scope', function($scope) {
       success: function(myObject) {
         $scope.facilities = (myObject._serverData.results)
         $scope.$apply();
-          // The object was refreshed successfully.
+        // The object was refreshed successfully.
       },
       error: function(myObject, error) {
         // The object was not refreshed successfully.
@@ -52,6 +54,15 @@ angular.module('app').controller('SessionCtrl', ['$scope', function($scope) {
     });
   }
 
+
+
+  $scope.asLoggedIn = function() {
+    $scope.getFacility();
+  }
+
+  if($scope.currentUser) {
+    $scope.asLoggedIn();
+  }
 
   //   var username = "test@test.com"
   //   var password = "lol1234"

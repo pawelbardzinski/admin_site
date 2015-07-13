@@ -7,7 +7,7 @@
     {{success}}
   <a href="#" class="close">&times;</a>
   </div>
-  <div class="large-3 large-centered columns" ng-hide="user.signedIn">
+  <div class="large-3 large-centered columns" ng-hide="currentUser">
     <div class="login-box">
       <div class="row">
         <div class="large-12 columns">
@@ -32,14 +32,14 @@
       </div>
     </div>
   </div>
-  <div ng-show="user.signedIn">
+  <div ng-show="currentUser">
     <div class='content'>
       <div class='visible'>
         <p>
           Hello
         </p>
         <ul>
-          <li>{{user.currentUser.username}}</li>
+          <li>{{currentUser.username}}</li>
           <li>in</li>
           <li>Staffingwidget app</li>
         </ul>
