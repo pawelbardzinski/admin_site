@@ -23,7 +23,7 @@ angular.module('app').controller('FacilityCtrl', ['$scope', function($scope) {
 
 
   $scope.$watch('user.currentUser', function(newVal, oldVal) {
-    if ($scope.user.currentUser || newVal) {
+    if ($scope.user.currentUser) {
       $scope.getFacility();
     }
   }, true);

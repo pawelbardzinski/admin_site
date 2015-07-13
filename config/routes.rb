@@ -2,6 +2,12 @@ Rails.application.routes.draw do
 
   root 'hospitals#index'
 
+  get '/users' => 'users#index'
+
+
+  get '/templates/:path.html' => 'templates#template', :constraints => { :path => /.+/  }
+  get "*path" => "hospitals#index"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
