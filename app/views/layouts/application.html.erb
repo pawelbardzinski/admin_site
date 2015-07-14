@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app">
+<html lang="en" ng-app="app" ng-cloak>
 
 <head>
   <base href="/">
@@ -36,16 +36,6 @@
       </ul>
     </section>
   </nav>
-
-  <div data-alert class="alert-box alert round" ng-show="error">
-    {{error}}
-    <a href="#" class="close">&times;</a>
-  </div>
-  <div data-alert class="alert-box success round" ng-show="success">
-    {{success}}
-    <a href="#" class="close">&times;</a>
-  </div>
-
     <div ui-view><%= yield %></div>
 
 </body>
