@@ -17,7 +17,7 @@
   <nav class="top-bar" data-topbar role="navigation">
     <ul class="title-area">
       <li class="name">
-        <h1><a href="/">Staffingwidget</a></h1>
+        <h1><a ui-sref="index">Staffingwidget</a></h1>
       </li>
       <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
       <li class="toggle-topbar menu-icon">
@@ -28,7 +28,7 @@
     </ul>
     <section class="top-bar-section" ng-show="user.currentUser">
       <ul class="left">
-        <li><b><a href="users">USERS</a></b></li>
+        <li><b><a ui-sref="users">USERS</a></b></li>
       </ul>
       <ul class="right">
         <li><a href="#">You are signed in as: {{user.currentUser.attributes.username}} </a></li>
@@ -46,7 +46,7 @@
     <a href="#" class="close">&times;</a>
   </div>
 
-    <div ng-view><%= yield %></div>
+    <div ui-view><%= yield %></div>
 
 </body>
 

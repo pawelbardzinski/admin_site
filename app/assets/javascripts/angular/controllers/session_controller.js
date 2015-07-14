@@ -1,4 +1,4 @@
-angular.module('app').controller('SessionCtrl', ['$scope', function($scope) {
+angular.module('app').controller('sessionCtrl', ['$scope', '$state', function($scope, $state) {
 
   $scope.disabledButton = false;
 
@@ -10,6 +10,7 @@ angular.module('app').controller('SessionCtrl', ['$scope', function($scope) {
         $scope.error = ""
         $scope.user.currentUser = Parse.User.current();
         $scope.success = "You are signed in as " + $scope.user.currentUser
+        $state.forceReload();
         $scope.$apply();
       },
       error: function(user, error) {
@@ -17,26 +18,8 @@ angular.module('app').controller('SessionCtrl', ['$scope', function($scope) {
         $scope.success = ""
         $scope.error = "Invalid username or password"
         $scope.$apply();
+
       }
     });
   }
-
-
-  //   var username = "test@test.com"
-  //   var password = "lol1234"
-  // var query = new Parse.Query(User);
-  // user.get('oahPf3rd1p')
-
-  // user.fetch({
-  // success: function(myObject) {
-  //   console.log(myObject._serverData.results)
-  //   // The object was refreshed successfully.
-  // },
-  // error: function(myObject, error) {
-  // debugger
-  //   // The object was not refreshed successfully.
-  //   // error is a Parse.Error with an error code and message.
-  // }
-  // });
-
 }]);

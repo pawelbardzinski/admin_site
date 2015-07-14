@@ -15,7 +15,6 @@
 //= require foundation
 //= require angular
 //= require angularjs/rails/resource
-//= require angular-route
 //= require_tree ./angular
 //= require angular-resource
 //= require underscore
