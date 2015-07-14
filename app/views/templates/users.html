@@ -5,17 +5,21 @@
       <thead>
         <tr>
           <th>Name</th>
+          <th>Role name</th>
+          <th>Role id</th>
           <th>Facility id</th>
-          <th>Object id</th>
+          <th>Id</th>
           <th>Created At</th>
           <th>Updated At</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="user in users">
-          <td>{{user.username}}</td>
-          <td>{{user.facility.id}}</td>
-          <td>{{user.objectId}}</td>
+          <td>{{user.attributes.username}}</td>
+          <td>{{getRoleName(user)}}</td>
+          <td>{{user.attributes.roleInfo.id}}</td>
+          <td>{{user.attributes.facility.id}}</td>
+          <td>{{user.attributes.id}}</td>
           <td>{{user.createdAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
           <td>{{user.updatedAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
 
