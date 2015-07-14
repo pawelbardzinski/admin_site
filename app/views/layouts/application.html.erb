@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="app" ng-cloak>
+<html lang="en" ng-app="app">
 
 <head>
   <base href="/">
@@ -9,7 +9,6 @@
 
   <%= stylesheet_link_tag "application" %>
   <%= javascript_include_tag "application" %>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
   <%= csrf_meta_tags %>
 </head>
 
@@ -47,8 +46,7 @@
     <a href="#" class="close">&times;</a>
   </div>
 
-
-  <div ng-view><%= yield %></div>
+    <div ng-view><%= yield %></div>
 
 </body>
 

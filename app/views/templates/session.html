@@ -1,4 +1,4 @@
-<div ng-controller="SessionCtrl" ng-cloak>
+<div ng-controller="SessionCtrl">
   <div class="large-3 large-centered columns" ng-hide="user.currentUser">
     <div class="login-box">
       <div class="row">
@@ -23,34 +23,6 @@
           <span ng-show="disabledButton" us-spinner="{radius:5, width:4, length: 12}"></span>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-<div ng-controller="FacilityCtrl" ng-cloak ng-init=getFacility()>
-  <div ng-show="user.currentUser" >
-    <div class="row">
-      <table id="facilites">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Negative Notification Threshold</th>
-            <th>Positive Notification Threshold</th>
-            <th>Notifications</th>
-            <th>Object id</th>
-            <th>Created At</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="facility in facilities">
-            <td>{{facility.name}}</td>
-            <td>{{facility.negativeNotificationThreshold}}</td>
-            <td>{{facility.positiveNotificationThreshold}}</td>
-            <td>{{facility.notifications}}</td>
-            <td>{{facility.objectId}}</td>
-            <td>{{facility.createdAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </div>
