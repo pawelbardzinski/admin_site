@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
 
-  root 'hospitals#index'
+  root 'templates#index'
+
+  get '/users' => 'users#index'
+
+  get '/templates/:path.html' => 'templates#template', :constraints => { :path => /.+/  }
+  # get "*path" => "templates#index"
+
+  get '*unmatched_route', :to => 'application#raise_not_found!'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

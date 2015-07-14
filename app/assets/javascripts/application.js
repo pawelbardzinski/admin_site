@@ -13,9 +13,11 @@
 //= require jquery
 //= require jquery_ujs
 //= require foundation
-//= require underscore
 //= require angular
+//= require angularjs/rails/resource
 //= require_tree ./angular
+//= require angular-resource
+//= require underscore
 //= require_tree .
 
 $(function(){ $(document).foundation(); });
