@@ -6,12 +6,17 @@ angular.module('app').controller('ApplicationCtrl', ['$scope', '$state', functio
   $scope.user = {
     currentUser: Parse.User.current()
   }
+  $scope.alerts = {
+    success: "",
+    error: ""
+  }
 
   $scope.logout = function() {
     Parse.User.logOut()
     $scope.user.currentUser = null;
-    $scope.success = "You have been successfully logged out!"
     $state.forceReload();
+    $scope.error = ""
+    $scope.alerts.success = "You have been successfully logged out!"
   }
 
 }]);

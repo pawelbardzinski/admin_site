@@ -1,6 +1,7 @@
+<div ng-include src="'templates/shared/notifications.html'"></div>
 <div>
-  <div class="row">
-    <table id="facilites">
+  <div class="row margin-top">
+    <table ng-show="facilitiesFetched == true">
       <thead>
         <tr>
           <th>Name</th>
@@ -22,5 +23,11 @@
         </tr>
       </tbody>
     </table>
+    <div ng-hide="facilitiesFetched">
+      Fetching data, please wait.
+    </div>
+    <div ng-show="facilitiesFetched == 'error'">
+      There was a problem with fetching data, please refresh your page.
+    </div>
   </div>
 </div>
