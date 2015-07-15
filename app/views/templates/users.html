@@ -4,25 +4,30 @@
     <table ng-show="usersFetched  == true">
       <thead>
         <tr>
+          <th>Id</th>
           <th>Name</th>
           <th>Role name</th>
           <th>Role id</th>
           <th>Facility id</th>
-          <th>Id</th>
           <th>Created At</th>
           <th>Updated At</th>
+          <th>Update Role</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="user in users">
+          <td>{{user.id}}</td>
           <td>{{user.attributes.username}}</td>
           <td>{{getRoleName(user)}}</td>
           <td>{{user.attributes.roleInfo.id}}</td>
           <td>{{user.attributes.facility.id}}</td>
-          <td>{{user.attributes.id}}</td>
           <td>{{user.createdAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
           <td>{{user.updatedAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
-
+          <td>{{roles[1].attributes.name}}</td>
+          <td ng-show="{{getRoleName(user) == ''}}">
+            <button ng-click="destroyUser(user)" class="alert">Alert Button</button >
+          </td>
         </tr>
       </tbody>
     </table>
