@@ -10,9 +10,6 @@ body {
 div.alert-box.round {
   margin: 20px;
 }
-.margin-top {
-  margin-top: 25px;
-}
 
 span {
   position: relative;
@@ -21,13 +18,41 @@ span {
 }
 
 #users_table td button{
-  padding: 10px;
   line-height: 1;
   color: #fff;
   width: 100%;
   margin-bottom: 10px;
 }
 
+.small-button{
+  line-height: 1;
+  padding: 10px;
+}
+
+/* margin */
+
+.small-top-margin{
+  margin-top: 10px;
+}
+
+.none-left-margin{
+  margin-left: 0px !important;
+}
+
+.margin-top {
+  margin-top: 25px;
+}
+
 .no-bottom-margin{
   margin-bottom: 0px;
+}
+
+textarea{
+  max-width: 400px;
+  margin-bottom: 0px;
+}
+
+.row input.form-control{
+  display: block;
+  margin-top: 5px;
 }

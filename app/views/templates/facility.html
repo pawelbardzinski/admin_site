@@ -4,21 +4,25 @@
     <table ng-show="facilitiesFetched == true">
       <thead>
         <tr>
+          <th>Id</th>
           <th>Name</th>
+          <th>Notifications</th>
           <th>Negative Notification Threshold</th>
           <th>Positive Notification Threshold</th>
-          <th>Notifications</th>
-          <th>Object id</th>
+          <th>Variance Reasons</th>
+          <th>Units</th>
           <th>Created At</th>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="facility in facilities">
-          <td>{{facility.name}}</td>
-          <td>{{facility.negativeNotificationThreshold}}</td>
-          <td>{{facility.positiveNotificationThreshold}}</td>
-          <td>{{facility.notifications}}</td>
-          <td>{{facility.objectId}}</td>
+          <td>{{facility.id}}</td>
+          <td>{{facility.attributes.name}}</td>
+          <td>{{facility.attributes.notifications}}</td>
+          <td>{{facility.attributes.negativeNotificationThreshold}}</td>
+          <td>{{facility.attributes.positiveNotificationThreshold}}</td>
+          <td>{{facility.attributes.varianceReasons.join(", ")}}</td>
+          <td>{{unitNames(facility)}}</td>
           <td>{{facility.createdAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
         </tr>
       </tbody>
@@ -29,5 +33,34 @@
     <div ng-show="facilitiesFetched == 'error'">
       There was a problem with fetching data, please refresh your page.
     </div>
+    <form ng-submit="addNewFacility()" name="facility_form">
+      <div class="row margin-top none-left-margin large-4">
+        <div class="large-6 columns">
+          <label>Name</label>
+          <input ng-model="name" class="form-control"></input>
+        </div>
+        <div class="large-6 columns">
+          <label>Negative Notification Threshold</label>
+          <input type="number" ng-model="negative" class="form-control"></input>
+        </div>
+        <div class="large-6 columns">
+          <label>Notifications</label>
+          <input ng-model="notifications" type="radio" value="False" id="notificationsTrue">
+          <label for="notificationsTrue">True</label>
+          <input ng-model="notifications" type="radio" value="False" id="notificationsFalse">
+          <label for="notificationsFalse">False</label>
+        </div>
+        <div class="large-6 columns">
+          <label>Positive Notification Threshold</label>
+          <input type="number" ng-model="positive" class="form-control"></input>
+        </div>
+        <textarea placeholder="Variance Reasons" class="small-top-margin" msd-elastic ng-model="varianceReasons" ng-list="&#10;" ng-trim="false"></textarea>
+        <div>
+          <button type="submit" class="small-button small-top-margin">
+            Create Facility
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
