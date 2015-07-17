@@ -2,6 +2,10 @@ angular.module('app').controller('facilityCtrl', ['$scope', function($scope) {
 
   $scope.facilities = []
   $scope.facilitiesFetched = false;
+  $scope.newFacility = {
+    notifications: true
+  }
+
 
 
   $scope.getFacility = function() {
@@ -43,8 +47,13 @@ angular.module('app').controller('facilityCtrl', ['$scope', function($scope) {
   $scope.addNewFacility = function() {
     var Facility = Parse.Object.extend("Facility");
     var facility = new Facility();
-    facility.set("name", $scope.name)
-    facility.set("varianceReasons", $scope.varianceReasons)
+    facility.set("name", $scope.newFacility.name)
+    facility.set("varianceReasons", $scope.newFacility.varianceReasons)
+    facility.set("varianceReasons", $scope.newFacility.varianceReasons)
+    facility.set("negativeNotificationThreshold", $scope.newFacility.negativeNotificationThreshold)
+    facility.set("positiveNotificationThreshold", $scope.newFacility.positiveNotificationThreshold)
+
+
     facility.save(null, {
       success: function(facility) {
         $scope.facilities.push(facility)
@@ -66,7 +75,7 @@ angular.module('app').controller('facilityCtrl', ['$scope', function($scope) {
 
   $scope.$watch('user.currentUser', function(newVal, oldVal) {
     if ($scope.user.currentUser) {
-      // $scope.getFacility();
+      $scope.getFacility();
     }
   }, true);
 

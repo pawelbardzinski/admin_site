@@ -47,8 +47,15 @@ span {
   margin-bottom: 0px;
 }
 
+.big-margin-top{
+  margin-top: 50px;
+}
+
+.small-left-margin{
+  margin-left: 15px;
+}
+
 textarea{
-  max-width: 400px;
   margin-bottom: 0px;
 }
 

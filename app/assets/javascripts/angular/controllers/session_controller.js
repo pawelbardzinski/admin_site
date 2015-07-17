@@ -5,8 +5,10 @@ angular.module('app').controller('sessionCtrl', ['$scope', '$state', function($s
   $scope.signInUser = function() {
     $scope.success = "";
     $scope.disabledButton = true;
+    debugger
     Parse.User.logIn($scope.user.username, $scope.user.password, {
       success: function(user) {
+        debugger
         $scope.disabledButton = false;
         $scope.alerts.error = ""
         $scope.user.currentUser = Parse.User.current();
