@@ -51,7 +51,7 @@
           </div>
           <div class="small-12 columns">
             <label>Variance Reasons</label>
-            <textarea placeholder="Type one by one separated by a new line" class="small-top-margin" msd-elastic ng-model="newFacility.varianceReasons" ng-list="&#10;" ng-trim="false"></textarea>
+            <textarea placeholder="Type one per line" class="small-top-margin" msd-elastic ng-model="newFacility.varianceReasons" ng-list="&#10;" ng-trim="false"></textarea>
           </div>
           <button type="submit" class="small-button small-top-margin small-left-margin">
             Create Facility
@@ -61,9 +61,9 @@
     </form>
   </div>
   <div ng-hide="facilitiesFetched">
-    Fetching data, please wait.
+    Fetching data...
   </div>
   <div ng-show="facilitiesFetched == 'error'">
-    There was a problem with fetching data, please refresh your page.
+    There was a problem with fetching data. Please refresh your page.
   </div>
 </div>

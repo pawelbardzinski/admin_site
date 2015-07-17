@@ -25,17 +25,17 @@
           <td> Comming soon </td>
           <!-- <td>{{roles[1].attributes.name}}</td> -->
           <td class="no-bottom-margin" ng-show="{{getRoleName(user) != 'Admin'}}">
-            <button ng-confirm-click="You are about to destroy user! Are you SURE of this?" ng-click="destroyUser(user)" class="alert small-button">Delete User</button>
+            <button ng-confirm-click="Are you sure?" ng-click="destroyUser(user)" class="alert small-button">Delete User</button>
             <button class="info small-button">Update password (soon)</button>
           </td>
         </tr>
       </tbody>
     </table>
     <div ng-hide="usersFetched == true">
-      Fetching data, please wait.
+      Fetching data...
     </div>
     <div ng-show="usersFetched == 'error'">
-      There was a problem with fetching data, please refresh your page.
+      There was a problem with fetching data. Please refresh the page.
     </div>
   </div>
 </div>
