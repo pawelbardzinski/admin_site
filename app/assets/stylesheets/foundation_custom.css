@@ -10,11 +10,6 @@ body {
 div.alert-box.round {
   margin: 20px;
 }
-span {
-  position: relative;
-  right: -105px;
-  top: 35px;
-}
 #users_table td button {
   line-height: 1;
   color: #fff;
@@ -62,5 +57,10 @@ table#users_table tbody tr form {
   position: absolute;
   right: 5px;
   top: 10px;
-  cursor: pointer
+  cursor: pointer;
+}
+
+.alert-box{
+  padding-left: 30px;
+  color: #fff !important;
 }

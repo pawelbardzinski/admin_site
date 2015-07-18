@@ -12,13 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require foundation
 //= require angular
 //= require angularjs/rails/resource
 //= require_tree ./angular
 //= require angular-resource
 //= require angular-ui-bootstrap
 //= require angular-ui-bootstrap-tpls
+//= require foundation
 //= require underscore
 //= require_tree .
 

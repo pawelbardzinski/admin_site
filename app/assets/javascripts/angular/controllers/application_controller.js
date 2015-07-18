@@ -16,7 +16,7 @@ angular.module('app').controller('ApplicationCtrl', ['$scope', '$state', functio
     $scope.user.currentUser = null;
     $state.forceReload();
     $scope.error = ""
-    $scope.alerts.success = "You have been successfully logged out!"
+    $scope.alerts.info = "You have been successfully logged out!"
   }
 
 }]);

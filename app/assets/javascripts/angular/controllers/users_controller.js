@@ -1,5 +1,6 @@
 angular.module('app').controller('usersCtrl', ['$scope', '$filter', function($scope, $filter) {
   $scope.usersFetched = false;
+  $scope.editUser = {}
 
   $scope.getUsers = function() {
 
@@ -32,7 +33,7 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', function($sc
       }).then(function(result) {
         singleObject = $filter('filter')($scope.users, function (object) {return object.id === result.id;})[0];
         $scope.users.splice( $scope.users.indexOf(singleObject), 1 );
-        $scope.alerts.success = "User has been deleted"
+        $scope.alerts.info = "User has been deleted"
         $scope.$apply();
       }, function(error) {
         $scope.alerts.error = error
@@ -60,10 +61,10 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', function($sc
   }
 
   $scope.updatePassword = function(user){
-    var user = new editUser.password();
-    debugger
-    user.set("password", password);
-
+    // var User = Parse.Object.extend("User");
+    // var user = new User();
+    // debugger
+    user.set("password", $scope.editUser.password[user.id]);
     user.save(null, {
       success: function(user) {
       debugger

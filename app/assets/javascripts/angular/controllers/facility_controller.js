@@ -57,7 +57,7 @@ angular.module('app').controller('facilityCtrl', ['$scope', function($scope) {
     facility.save(null, {
       success: function(facility) {
         $scope.facilities.push(facility)
-        $scope.alerts.success = "New Facility has been created"
+        $scope.alerts.info = "New Facility has been created"
         $scope.$apply();
       },
       error: function(facility, error) {
