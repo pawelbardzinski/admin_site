@@ -30,8 +30,8 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', function($sc
     Parse.Cloud.run("destroyUser", {
         userId: user.id
       }).then(function(result) {
-        single_object = $filter('filter')($scope.users, function (object) {return object.id === result.id;})[0];
-        $scope.users.splice( $scope.users.indexOf(single_object), 1 );
+        singleObject = $filter('filter')($scope.users, function (object) {return object.id === result.id;})[0];
+        $scope.users.splice( $scope.users.indexOf(singleObject), 1 );
         $scope.alerts.success = "User has been deleted"
         $scope.$apply();
       }, function(error) {
@@ -53,6 +53,28 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', function($sc
         alert("Error: " + error.code + " " + error.message);
       }
     });
+  }
+
+  $scope.showInputForPassword = function(user){
+    user.inputForPasswordIsShow = true;
+  }
+
+  $scope.updatePassword = function(user){
+    var user = new editUser.password();
+    debugger
+    user.set("password", password);
+
+    user.save(null, {
+      success: function(user) {
+      debugger
+
+
+      }
+    });
+  }
+
+  $scope.togglePassword = function(){
+    $scope.isHidePassword = $scope.isHidePassword? false : true
   }
 
 

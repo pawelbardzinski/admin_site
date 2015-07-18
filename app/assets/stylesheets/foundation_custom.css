@@ -10,56 +10,57 @@ body {
 div.alert-box.round {
   margin: 20px;
 }
-
 span {
   position: relative;
   right: -105px;
   top: 35px;
 }
-
-#users_table td button{
+#users_table td button {
   line-height: 1;
   color: #fff;
   width: 100%;
   margin-bottom: 10px;
 }
-
-.small-button{
+.small-button {
   line-height: 1;
   padding: 10px;
 }
 
 /* margin */
 
-.small-top-margin{
+.small-top-margin {
   margin-top: 10px;
 }
-
-.none-left-margin{
+.none-left-margin {
   margin-left: 0px !important;
 }
-
 .margin-top {
   margin-top: 25px;
 }
-
-.no-bottom-margin{
+.no-bottom-margin {
   margin-bottom: 0px;
 }
-
-.big-margin-top{
+.big-margin-top {
   margin-top: 50px;
 }
-
-.small-left-margin{
+.small-left-margin {
   margin-left: 15px;
 }
-
-textarea{
+textarea {
   margin-bottom: 0px;
 }
-
-.row input.form-control{
+.row input.form-control {
   display: block;
   margin-top: 5px;
+}
+
+table#users_table tbody tr form {
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  right: 5px;
+  top: 10px;
+  cursor: pointer
 }

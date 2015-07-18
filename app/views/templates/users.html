@@ -26,7 +26,13 @@
           <!-- <td>{{roles[1].attributes.name}}</td> -->
           <td class="no-bottom-margin" ng-show="{{getRoleName(user) != 'Admin'}}">
             <button ng-confirm-click="You are about to destroy user! Are you SURE of this?" ng-click="destroyUser(user)" class="alert small-button">Delete User</button>
-            <button class="info small-button">Update password (soon)</button>
+            <button ng-hide="user.inputForPasswordIsShow" ng-click="showInputForPassword(user)" class="info small-button">Update password</button>
+            <form ng-show="user.inputForPasswordIsShow" ng-submit="updatePassword(user)" name="comment_form" novalidate>
+              <input type="text" ng-hide="isHidePassword" ng-model="editUser.password" required class="form-control inline"></input>
+              <input type="password" ng-show="isHidePassword" ng-model="editUser.password" required class="form-control inline"></input>
+              <i tooltip-placement="right" tooltip="Click to hide or show password" ng-click="togglePassword()" class="fa fa-edit icon"></i>
+              <button ng-show="user.inputForPasswordIsShow" class="success small-button">Click to update</button>
+            </form>
           </td>
         </tr>
       </tbody>
