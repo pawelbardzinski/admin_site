@@ -1,6 +1,16 @@
-angular.module('app').controller('usersCtrl', ['$scope', '$filter', function($scope, $filter) {
+angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', function($scope, $filter, $http) {
+  var adminRoleId = "2nJCTxpoyr";
+
   $scope.usersFetched = false;
-  $scope.editUser = {}
+  $scope.editUser = {
+    isHidePassword: {}
+    }
+
+
+  $scope.isAdmin = function() {
+    var roleInfo = Parse.User.current().attributes.roleInfo
+    return roleInfo && roleInfo.id == adminRoleId
+  }
 
   $scope.getUsers = function() {
 
@@ -29,16 +39,18 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', function($sc
 
   $scope.destroyUser = function(user) {
     Parse.Cloud.run("destroyUser", {
-        userId: user.id
-      }).then(function(result) {
-        singleObject = $filter('filter')($scope.users, function (object) {return object.id === result.id;})[0];
-        $scope.users.splice( $scope.users.indexOf(singleObject), 1 );
-        $scope.alerts.info = "User has been deleted"
-        $scope.$apply();
-      }, function(error) {
-        $scope.alerts.error = error
-        $scope.$apply();
-      })
+      userId: user.id
+    }).then(function(result) {
+      singleObject = $filter('filter')($scope.users, function(object) {
+        return object.id === result.id;
+      })[0];
+      $scope.users.splice($scope.users.indexOf(singleObject), 1);
+      $scope.alerts.info = "User has been deleted"
+      $scope.$apply();
+    }, function(error) {
+      $scope.alerts.error = error
+      $scope.$apply();
+    })
   }
 
 
@@ -56,28 +68,28 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', function($sc
     });
   }
 
-  $scope.showInputForPassword = function(user){
+  $scope.showInputForPassword = function(user) {
     user.inputForPasswordIsShow = true;
   }
 
-  $scope.updatePassword = function(user){
-    // var User = Parse.Object.extend("User");
-    // var user = new User();
-    // debugger
-    user.set("password", $scope.editUser.password[user.id]);
-    user.save(null, {
-      success: function(user) {
-      debugger
+  $scope.updatePassword = function(user) {
+    Parse.Cloud.run("updateUserPassword", {
+      userId: user.id,
+      password: $scope.editUser.password[user.id]
+    }).then(function(result) {
+      $scope.alerts.info = "User" + editUser.email + "password been changed"
+      $scope.isHidePassword = true;
+      $scope.$apply();
+    }, function(error) {
+      $scope.alerts.error = error
+      $scope.$apply();
+    })
 
-
-      }
-    });
   }
 
-  $scope.togglePassword = function(){
-    $scope.isHidePassword = $scope.isHidePassword? false : true
+  $scope.togglePassword = function(user) {
+    $scope.editUser.isHidePassword[user] = $scope.editUser.isHidePassword[user] ? false : true
   }
-
 
   $scope.getRoles();
   $scope.getUsers();
