@@ -3,9 +3,10 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
 
   $scope.usersFetched = false;
   $scope.editUser = {
-    isHidePassword: {}
+    isHidePassword: {},
+    role: {},
+    password: {}
     }
-
 
   $scope.isAdmin = function() {
     var roleInfo = Parse.User.current().attributes.roleInfo
@@ -18,6 +19,9 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
     query.include("roleInfo");
     query.find({
       success: function(results) {
+        _.each(results, function(value, key){
+          value.roleName = $.isEmptyObject(value.get('roleInfo')) ? "" : value.get('roleInfo').attributes.name
+        })
         $scope.users = results;
         $scope.usersFetched = true;
         $scope.$apply();
@@ -72,20 +76,39 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
     user.inputForPasswordIsShow = true;
   }
 
+  $scope.showInputForRole = function(user) {
+    user.inputForRoleIsShow = true;
+  }
+
   $scope.updatePassword = function(user) {
-    Parse.Cloud.run("updateUserPassword", {
+    Parse.Cloud.run("updatePasswordForUser", {
       userId: user.id,
       password: $scope.editUser.password[user.id]
     }).then(function(result) {
-      $scope.alerts.info = "User" + editUser.email + "password been changed"
+      $scope.alerts.info = "User" + user.email + "password has been changed"
       $scope.isHidePassword = true;
       $scope.$apply();
     }, function(error) {
       $scope.alerts.error = error
       $scope.$apply();
     })
-
   }
+
+  $scope.updateRole = function(user) {
+    roleId = $scope.editUser.role[user.id]
+    Parse.Cloud.run("updateRoleForUser", {
+      userId: user.id,
+      roleId: roleId
+    }).then(function(result) {
+      user.roleName = $filter('filter')($scope.roles, {id: roleId})[0].attributes.name;
+      $scope.alerts.info = "User" + user.email + "role has been changed"
+      $scope.$apply();
+    }, function(error) {
+      $scope.alerts.error = error
+      $scope.$apply();
+    })
+  }
+
 
   $scope.togglePassword = function(user) {
     $scope.editUser.isHidePassword[user] = $scope.editUser.isHidePassword[user] ? false : true

@@ -1,6 +1,6 @@
 <div ng-include src="'templates/shared/notifications.html'"></div>
 <div ng-show="user.currentUser">
-  <div class="row margin-top">
+  <div class="row full-width margin-top">
     <table id="users_table" ng-show="usersFetched  == true">
       <thead>
         <tr>
@@ -10,7 +10,6 @@
           <th>Facility id</th>
           <th>Created At</th>
           <th>Updated At</th>
-          <th ng-show="isAdmin()">Update Role</th>
           <th ng-show="isAdmin()">Actions</th>
         </tr>
       </thead>
@@ -18,20 +17,23 @@
         <tr ng-repeat="user in users">
           <td>{{user.id}}</td>
           <td>{{user.attributes.username}}</td>
-          <td>{{getRoleName(user)}}</td>
+          <td>{{user.roleName}}</td>
           <td>{{user.attributes.facility.id}}</td>
           <td>{{user.createdAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
           <td>{{user.updatedAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
-          <td ng-show="isAdmin()"> Comming soon </td>
-          <!-- <td>{{roles[1].attributes.name}}</td> -->
-          <td class="no-bottom-margin" ng-show="{{isAdmin() && getRoleName(user) != 'Admin'}}">
+          <td class="no-bottom-margin min-width" ng-show="{{isAdmin() && getRoleName(user) != 'Admin'}}">
             <button ng-confirm-click="You are about to destroy user! Are you SURE of this?" ng-click="destroyUser(user)" class="alert small-button">Delete User</button>
             <button ng-hide="user.inputForPasswordIsShow" ng-click="showInputForPassword(user)" class="info small-button">Update password</button>
-            <form ng-show="user.inputForPasswordIsShow" ng-submit="updatePassword(user)" name="comment_form" novalidate>
-              <input type="text" ng-hide="editUser.isHidePassword[user.id]" ng-model="editUser.password[user.id]" required class="form-control inline"></input>
-              <input type="password" ng-show="editUser.isHidePassword[user.id]" ng-model="editUser.password[user.id]" required class="form-control inline"></input>
+            <form ng-show="user.inputForPasswordIsShow" ng-submit="updatePassword(user)" name="password_form" novalidate>
+              <input type="text" ng-show="editUser.isHidePassword[user.id]" ng-model="editUser.password[user.id]" required class="form-control inline"></input>
+              <input type="password" ng-hide="editUser.isHidePassword[user.id]" ng-model="editUser.password[user.id]" required class="form-control inline"></input>
               <i tooltip-placement="right" tooltip="Click to show or hide password" ng-click="togglePassword(user.id)" class="fa fa-edit icon"></i>
-              <button ng-show="user.inputForPasswordIsShow" class="success small-button">Click to update</button>
+              <button ng-show="user.inputForPasswordIsShow" class="success small-button">Click to update password</button>
+            </form>
+            <button ng-hide="user.inputForRoleIsShow" ng-click="showInputForRole(user)" class="info small-button">Update role</button>
+            <form ng-show="user.inputForRoleIsShow" ng-submit="updateRole(user)" name="role_form">
+              <select2 style="width: 100%;" ng-model="editUser.role[user.id]" s2-options="role.id as role.attributes.name for role in roles"></select2>
+              <button ng-show="editUser.role[user.id]" class="success small-button small-top-margin">Click to update role</button>
             </form>
           </td>
         </tr>

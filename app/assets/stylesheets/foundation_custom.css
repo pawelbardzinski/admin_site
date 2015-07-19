@@ -64,3 +64,19 @@ table#users_table tbody tr form {
   padding-left: 30px;
   color: #fff !important;
 }
+.row.full-width{
+  width: 80%;
+ max-width: 100%;
+}
+
+table{
+  width: 100%;
+}
+
+td.min-width{
+  min-width: 200px;
+}
+
+td.max-width{
+  max-width: 100px !important;
+}

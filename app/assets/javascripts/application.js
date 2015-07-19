@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require select2
 //= require angular
 //= require angularjs/rails/resource
 //= require_tree ./angular
