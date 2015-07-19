@@ -5,7 +5,8 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
     isHidePassword: {},
     role: {},
     password: {}
-    }
+  }
+  $scope.newUser = {}
 
   $scope.getUsers = function() {
 
@@ -13,12 +14,25 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
     query.include("roleInfo");
     query.find({
       success: function(results) {
-        _.each(results, function(value, key){
+        _.each(results, function(value, key) {
           value.roleName = $.isEmptyObject(value.get('roleInfo')) ? "" : value.get('roleInfo').attributes.name
         })
         $scope.users = results;
-        $scope.usersFetched = true;
-        $scope.$apply();
+
+        var Facility = Parse.Object.extend("Facility");
+        var query = new Parse.Query("Facility");
+
+        query.find({
+          success: function(paramsFacilities) {
+            $scope.usersFetched = true;
+            $scope.facilities = paramsFacilities;
+            $scope.$apply();
+          },
+          error: function(units, error) {
+            $scope.facilitiesFetched = 'error';
+            $scope.$apply();
+          }
+        })
       },
       error: function(error) {
         alert("Error: " + error.code + " " + error.message);
@@ -46,7 +60,7 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
       $scope.alerts.info = "User has been deleted"
       $scope.$apply();
     }, function(error) {
-      $scope.alerts.error = error
+      $scope.alerts.error = error.message
       $scope.$apply();
     })
   }
@@ -81,9 +95,10 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
     }).then(function(result) {
       $scope.alerts.info = "User" + user.attributes.username + "password has been changed"
       user.inputForPasswordIsShow = false;
+      $scope.editUser.password[user.id] = ""
       $scope.$apply();
     }, function(error) {
-      $scope.alerts.error = error
+      $scope.alerts.error = error.message
       $scope.$apply();
     })
   }
@@ -94,12 +109,14 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
       userId: user.id,
       roleId: roleId
     }).then(function(result) {
-      user.roleName = $filter('filter')($scope.roles, {id: roleId})[0].attributes.name;
+      user.roleName = $filter('filter')($scope.roles, {
+        id: roleId
+      })[0].attributes.name;
       user.inputForRoleIsShow = false;
-      $scope.alerts.info = "User" + user.email + "role has been changed"
+      $scope.alerts.info = "User" + user.attributes.username + "role has been changed"
       $scope.$apply();
     }, function(error) {
-      $scope.alerts.error = error
+      $scope.alerts.error = error.message
       $scope.$apply();
     })
   }
@@ -107,6 +124,46 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
 
   $scope.togglePassword = function(user) {
     $scope.editUser.isHidePassword[user] = $scope.editUser.isHidePassword[user] ? false : true
+  }
+
+  $scope.toggleNewUserPassword = function(user) {
+    $scope.newUser.isHidePassword = $scope.newUser.isHidePassword ? false : true
+  }
+
+
+  $scope.facilityName = function(user) {
+    if (user.attributes.facility) {
+      facilities = $filter('filter')($scope.facilities, function(object) {
+        return object.id === user.attributes.facility.id
+      })
+      return facilities[0] ? facilities[0].attributes.name : "";
+    }
+  }
+
+  $scope.addNewUser = function() {
+    Parse.Cloud.run("createNewUser", {
+      username: $scope.newUser.username,
+      password: $scope.newUser.password,
+      facilityId: $scope.newUser.facility,
+      roleId: $scope.newUser.role
+    }).then(function(user) {
+      $scope.alerts.info = "User" + user.attributes.username + "has been created"
+      if ($scope.newUser.role) {
+        user.roleName = $filter('filter')($scope.roles, {
+          id: $scope.newUser.role
+        })[0].attributes.name;
+      }
+      $scope.newUser.facility = null
+      $scope.newUser.role = null
+      $scope.newUser.username = ""
+      $scope.newUser.password = ""
+
+      $scope.users.push(user)
+      $scope.$apply();
+    }, function(error) {
+      $scope.alerts.error = error.message
+      $scope.$apply();
+    })
   }
 
   $scope.getRoles();

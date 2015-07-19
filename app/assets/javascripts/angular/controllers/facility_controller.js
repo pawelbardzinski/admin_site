@@ -66,7 +66,7 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function(
         $scope.$apply();
       },
       error: function(facility, error) {
-        $scope.alerts.error = error
+        $scope.alerts.error = error.message
       }
     });
   }

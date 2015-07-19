@@ -32,6 +32,9 @@ div.alert-box.round {
 .margin-top {
   margin-top: 25px;
 }
+.margin-bottom {
+  margin-bottom: 30px;
+}
 .no-bottom-margin {
   margin-bottom: 0px;
 }
@@ -43,40 +46,41 @@ div.alert-box.round {
 }
 textarea {
   margin-bottom: 0px;
+  resize: none;
 }
 .row input.form-control {
   display: block;
   margin-top: 5px;
 }
-
 table#users_table tbody tr form {
   position: relative;
 }
-
 .icon {
   position: absolute;
-  right: 5px;
-  top: 10px;
+  right: 8px;
+  top: 12px;
   cursor: pointer;
 }
-
-.alert-box{
+.new {
+  position: absolute;
+  right: 20px;
+  top: 35px;
+  cursor: pointer;
+}
+.alert-box {
   padding-left: 30px;
   color: #fff !important;
 }
-.row.full-width{
+.row.full-width {
   width: 80%;
- max-width: 100%;
+  max-width: 100%;
 }
-
-table{
+table {
   width: 100%;
 }
-
-td.min-width{
+td.min-width {
   min-width: 200px;
 }
-
-td.max-width{
+td.max-width {
   max-width: 100px !important;
 }
