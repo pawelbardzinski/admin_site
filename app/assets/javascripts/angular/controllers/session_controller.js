@@ -17,6 +17,7 @@ angular.module('app').controller('sessionCtrl', ['$scope', '$state', function($s
       error: function(user, error) {
         $scope.disabledButton = false;
         $scope.alerts.info = ""
+        $scope.user.password = "";
         $scope.alerts.error = "Invalid username or password"
         $scope.$apply();
       }

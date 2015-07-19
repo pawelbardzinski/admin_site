@@ -1,5 +1,4 @@
 angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', function($scope, $filter, $http) {
-  var adminRoleId = "2nJCTxpoyr";
 
   $scope.usersFetched = false;
   $scope.editUser = {
@@ -7,11 +6,6 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
     role: {},
     password: {}
     }
-
-  $scope.isAdmin = function() {
-    var roleInfo = Parse.User.current().attributes.roleInfo
-    return roleInfo && roleInfo.id == adminRoleId
-  }
 
   $scope.getUsers = function() {
 
@@ -85,8 +79,8 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
       userId: user.id,
       password: $scope.editUser.password[user.id]
     }).then(function(result) {
-      $scope.alerts.info = "User" + user.email + "password has been changed"
-      $scope.isHidePassword = true;
+      $scope.alerts.info = "User" + user.attributes.username + "password has been changed"
+      user.inputForPasswordIsShow = false;
       $scope.$apply();
     }, function(error) {
       $scope.alerts.error = error
@@ -101,6 +95,7 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
       roleId: roleId
     }).then(function(result) {
       user.roleName = $filter('filter')($scope.roles, {id: roleId})[0].attributes.name;
+      user.inputForRoleIsShow = false;
       $scope.alerts.info = "User" + user.email + "role has been changed"
       $scope.$apply();
     }, function(error) {

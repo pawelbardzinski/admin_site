@@ -1,12 +1,10 @@
-angular.module('app').controller('facilityCtrl', ['$scope', function($scope) {
+angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function($scope, $filter) {
 
   $scope.facilities = []
   $scope.facilitiesFetched = false;
   $scope.newFacility = {
     notifications: true
   }
-
-
 
   $scope.getFacility = function() {
     var Facility = Parse.Object.extend("Facility");
@@ -15,30 +13,37 @@ angular.module('app').controller('facilityCtrl', ['$scope', function($scope) {
     query.find({
       success: function(paramsFacilities) {
         $scope.facilities = paramsFacilities;
-        _.each($scope.facilities, function(value, key) {
-          facilityQuery = value.relation('units').query()
-          facilityQuery.find({
-            success: function(results) {
-              value.unitAttributes = _.map(results, function(unit) {
+
+        var Unit = Parse.Object.extend("Unit");
+        var query = new Parse.Query("Unit");
+        query.include("facility");
+
+        query.find({
+          success: function(paramsUnits) {
+            $scope.units = paramsUnits;
+            $scope.facilitiesFetched = true;
+            _.each($scope.facilities, function(value, key) {
+
+              var facilityUnits = $filter('filter')($scope.units, function(object) {
+                return object.attributes.facility.id === value.id
+              });
+              value.unitAttributes = _.map(facilityUnits, function(unit) {
                 return {
                   unitId: unit.id,
                   unitName: unit.attributes.name
                 }
               })
-              $scope.$apply();
-            },
-            error: function(error) {
-              value.unitAttributes = []
-            }
-          });
+            })
+
+            $scope.$apply();
+          },
+          error: function(units, error) {
+            $scope.facilitiesFetched = 'error';
+          }
         })
-        $scope.facilitiesFetched = true;
-        // The object was refreshed successfully.
       },
       error: function(facilities, error) {
-        $scope.usersFetched = 'error';
-        // The object was not refreshed successfully.
-        // error is a Parse.Error with an error code and message.
+        $scope.facilitiesFetched = 'error';
       }
 
     });
@@ -61,8 +66,6 @@ angular.module('app').controller('facilityCtrl', ['$scope', function($scope) {
         $scope.$apply();
       },
       error: function(facility, error) {
-        // Execute any logic that should take place if the save fails.
-        // error is a Parse.Error with an error code and message.
         $scope.alerts.error = error
       }
     });
