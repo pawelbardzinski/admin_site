@@ -44,7 +44,23 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
           return 'sessionCtrl'
         }
       }
-    });
+    }).state('facility', {
+      url: '/facility',
+      templateUrl: function() {
+        if (Parse.User.current()) {
+          return 'templates/facility.html'
+        } else {
+          return 'templates/session.html'
+        }
+      },
+      controllerProvider: function() {
+        if (Parse.User.current()) {
+          return 'facilityCtrl'
+        } else {
+          return 'sessionCtrl'
+        }
+      }
+    })
 })
 
 app.config(function($provide) {

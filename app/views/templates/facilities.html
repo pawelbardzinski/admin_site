@@ -1,69 +1,68 @@
 <div ng-include src="'templates/shared/notifications.html'"></div>
-<div>
-  <div class="row full-width margin-top">
-    <form class="margin-bottom" ng-submit="addNewFacility()" name="facility_form" ng-show="isAdmin() && facilitiesFetched == true">
-      <h3 style="text-align: center">Create new Facility</h3>
-      <div class="medium-12 large-6 big-margin-top large-offset-3">
-        <div class="row margin-top none-left-margin ">
-          <div class="medium-12 large-6 columns">
-            <label>Name</label>
-            <input type="text" ng-model="newFacility.name" class="form-control"></input>
-          </div>
-          <div class="medium-12 large-6 columns">
-            <label>Negative Notification Threshold</label>
-            <input type="number" ng-model="newFacility.negativeNotificationThreshold" class="form-control"></input>
-          </div>
-          <div class="medium-12 large-6 columns">
-            <label>Notifications</label>
-            <input ng-model="newFacility.notifications" type="radio" data-ng-value="true" id="notificationsTrue">
-            <label for="notificationsTrue">True</label>
-            <input ng-model="newFacility.notifications" type="radio" data-ng-value="false" id="notificationsFalse">
-            <label for="notificationsFalse">False</label>
-          </div>
-          <div class="medium-12 large-6 columns">
-            <label>Positive Notification Threshold</label>
-            <input type="number" ng-model="newFacility.positiveNotificationThreshold" class="form-control"></input>
-          </div>
-          <div class="medium-12 columns">
-            <label>Variance Reasons</label>
-            <textarea placeholder="Type one by one separated by a new line" class="small-top-margin" msd-elastic ng-model="newFacility.varianceReasons" ng-list="&#10;" ng-trim="false"></textarea>
-          </div>
-          <button type="submit" class="small-button small-top-margin small-left-margin">
-            Create Facility
-          </button>
+<div class="row full-width margin-top">
+  <form class="margin-bottom" ng-submit="addNewFacility()" name="facility_form" ng-show="isAdmin() && facilitiesFetched == true">
+    <h3 style="text-align: center">Create new Facility</h3>
+    <div class="medium-12 large-6 big-margin-top large-offset-3">
+      <div class="row margin-top none-left-margin ">
+        <div class="medium-12 large-6 columns">
+          <label>Name</label>
+          <input type="text" ng-model="newFacility.name" class="form-control"></input>
         </div>
+        <div class="medium-12 large-6 columns">
+          <label>Negative Notification Threshold</label>
+          <input type="number" ng-model="newFacility.negativeNotificationThreshold" class="form-control"></input>
+        </div>
+        <div class="medium-12 large-6 columns">
+          <label>Notifications</label>
+          <input ng-model="newFacility.notifications" type="radio" data-ng-value="true" id="notificationsTrue">
+          <label for="notificationsTrue">True</label>
+          <input ng-model="newFacility.notifications" type="radio" data-ng-value="false" id="notificationsFalse">
+          <label for="notificationsFalse">False</label>
+        </div>
+        <div class="medium-12 large-6 columns">
+          <label>Positive Notification Threshold</label>
+          <input type="number" ng-model="newFacility.positiveNotificationThreshold" class="form-control"></input>
+        </div>
+        <div class="medium-12 columns">
+          <label>Variance Reasons</label>
+          <textarea placeholder="Type one by one separated by a new line" class="small-top-margin" msd-elastic ng-model="newFacility.varianceReasons" ng-list="&#10;" ng-trim="false"></textarea>
+        </div>
+        <button type="submit" class="small-button small-top-margin small-left-margin">
+          Create Facility
+        </button>
       </div>
-    </form>
-    <table ng-show="isAdmin() && facilitiesFetched == true">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Name</th>
-          <th>Notifications</th>
-          <th>Negative Notification Threshold</th>
-          <th>Positive Notification Threshold</th>
-          <th>Variance Reasons</th>
-          <th>Units</th>
-          <th>Created At</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="facility in facilities | orderBy:'-createdAt'">
-          <td>{{facility.id}}</td>
-          <td>{{facility.attributes.name}}</td>
-          <td>{{facility.attributes.notifications}}</td>
-          <td>{{facility.attributes.negativeNotificationThreshold}}</td>
-          <td>{{facility.attributes.positiveNotificationThreshold}}</td>
-          <td>{{facility.attributes.varianceReasons.join(", ")}}</td>
-          <td>{{unitNames(facility)}}</td>
-          <td>{{facility.createdAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div ng-hide="facilitiesFetched">
-      Fetching data, please wait.
     </div>
-    <div ng-show="facilitiesFetched == 'error'">
-      There was a problem with fetching data, please refresh your page.
-    </div>
+  </form>
+  <table ng-show="isAdmin() && facilitiesFetched == true">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Notifications</th>
+        <th>Negative Notification Threshold</th>
+        <th>Positive Notification Threshold</th>
+        <th>Variance Reasons</th>
+        <th>Units</th>
+        <th>Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="facility in facilities | orderBy:'-createdAt'">
+        <td>{{facility.id}}</td>
+        <td>{{facility.attributes.name}}</td>
+        <td>{{facility.attributes.notifications}}</td>
+        <td>{{facility.attributes.negativeNotificationThreshold}}</td>
+        <td>{{facility.attributes.positiveNotificationThreshold}}</td>
+        <td>{{facility.attributes.varianceReasons.join(", ")}}</td>
+        <td>{{unitNames(facility)}}</td>
+        <td>{{facility.createdAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div ng-hide="facilitiesFetched">
+    Fetching data, please wait.
   </div>
+  <div ng-show="facilitiesFetched == 'error'">
+    There was a problem with fetching data, please refresh your page.
+  </div>
+</div>

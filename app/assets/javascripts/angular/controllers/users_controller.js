@@ -32,7 +32,6 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
           });
         },
         function(error) {
-          console.log(error)
           $scope.users = [];
           $scope.usersFetched = true;
           $scope.$apply();
