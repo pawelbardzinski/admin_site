@@ -31,7 +31,7 @@
           <th>Id</th>
           <th>Name</th>
           <th>Role name</th>
-          <th ng-show="isSudo()">Facility</th>
+          <th ng-show="canEditFacility()">Facility</th>
           <th>Created At</th>
           <th>Updated At</th>
           <th ng-show="isAdmin()">Actions</th>
@@ -40,9 +40,9 @@
       <tbody>
         <tr ng-repeat="user in users | orderBy:'-createdAt'">
           <td>{{user.id}}</td>
-          <td>{{user.attributes.username}}</td>
+          <td>{{user.get('username')}}</td>
           <td>{{user.roleName}}</td>
-          <td ng-show="isSudo()">{{user.facilityName}}</td>
+          <td ng-show="canEditFacility()">{{user.facilityName}}</td>
           <td>{{user.createdAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
           <td>{{user.updatedAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
           <td class="no-bottom-margin min-width" ng-show="{{isAdmin() && ['Admin', 'Super User'].indexOf(getRoleName(user)) < 0}}">

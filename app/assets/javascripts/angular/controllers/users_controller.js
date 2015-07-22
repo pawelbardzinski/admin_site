@@ -60,13 +60,13 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
     if ($.isEmptyObject(user.get('roleInfo'))) {
       return ""
     }
-    return user.get('roleInfo').attributes.name
+    return user.get('roleInfo').get('name')
   }
 
 
   $scope.destroyUser = function(user) {
     Parse.Cloud.run("deleteUser", {
-      username: user.attributes.username
+      username: user.get('username')
     }).then(function(result) {
       singleObject = $filter('filter')($scope.users, function(object) {
         return object.id === result.id;
@@ -91,10 +91,10 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
 
   $scope.updatePassword = function(user) {
     Parse.Cloud.run("updateUser", {
-      username: user.attributes.username,
+      username: user.get('username'),
       password: $scope.editUser.password[user.id]
     }).then(function(result) {
-      $scope.alerts.info = "User " + user.attributes.username + " password has been changed"
+      $scope.alerts.info = "User " + user.get('username') + " password has been changed"
       user.inputForPasswordIsShow = false;
       $scope.editUser.password[user.id] = ""
       $scope.$apply();
@@ -106,7 +106,7 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
 
   $scope.updateRole = function(user) {
     Parse.Cloud.run("updateUserRole", {
-      username: user.attributes.username,
+      username: user.get('username'),
       role: $scope.editUser.role[user.id],
       assignedUnits: []
     }).then(function(result) {

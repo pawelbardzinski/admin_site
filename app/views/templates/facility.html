@@ -1,6 +1,6 @@
 <div ng-include src="'templates/shared/notifications.html'"></div>
 <div class="row full-width margin-top">
-  <div ng-show="(isAdmin() || isSudo()) && facilityFetched == true">
+  <div ng-show="(isAdmin() || canEditFacility()) && facilityFetched == true">
     <h1>Name: {{facility.attributes.name}}</h1>
     <div class="medium-4 columns">
       <h5>
