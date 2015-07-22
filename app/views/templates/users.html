@@ -46,7 +46,7 @@
           <td>{{user.id}}</td>
           <td>{{user.attributes.username}}</td>
           <td>{{user.roleName}}</td>
-          <td>{{facilityName(user)}}</td>
+          <td>{{user.facilityName}}</td>
           <td>{{user.createdAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
           <td>{{user.updatedAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
           <td class="no-bottom-margin min-width" ng-show="{{isAdmin() && getRoleName(user) != 'Admin'}}">
