@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   root 'templates#index'
 
   get '/users' => 'users#index'
+  get '/facility' => 'facilities#facility'
+
 
   get '/templates/:path.html' => 'templates#template', :constraints => { :path => /.+/  }
   # get "*path" => "templates#index"

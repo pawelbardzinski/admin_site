@@ -59,6 +59,8 @@ table#users_table tbody tr form {
   position: absolute;
   right: 8px;
   top: 12px;
+}
+.fa{
   cursor: pointer;
 }
 .new {
@@ -83,4 +85,13 @@ td.min-width {
 }
 td.max-width {
   max-width: 100px !important;
+}
+
+.coloured{
+  color: #008cba;
+}
+
+.listing{
+  margin-left: 40px;
+  margin-top: 10px;
 }
