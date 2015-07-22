@@ -25,12 +25,12 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function(
             _.each($scope.facilities, function(value, key) {
 
               var facilityUnits = $filter('filter')($scope.units, function(object) {
-                return object.attributes.facility.id === value.id
+                return object.get('facility').id === value.id
               });
               value.unitAttributes = _.map(facilityUnits, function(unit) {
                 return {
                   unitId: unit.id,
-                  unitName: unit.attributes.name
+                  unitName: unit.get('name')
                 }
               })
             })

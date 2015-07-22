@@ -11,7 +11,7 @@ angular.module('app').controller('sessionCtrl', ['$scope', '$state', function($s
         $scope.alerts.error = ""
         $scope.user.currentUser = Parse.User.current();
         $state.forceReload();
-        $scope.alerts.info = "You have been signed in as " + $scope.user.currentUser.attributes.username
+        $scope.alerts.info = "You have been signed in as " + $scope.user.currentUser.get('username')
         $scope.$apply();
       },
       error: function(user, error) {

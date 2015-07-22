@@ -112,7 +112,7 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
     }).then(function(result) {
       user.roleName = $scope.editUser.role[user.id];
       user.inputForRoleIsShow = false;
-      $scope.alerts.info = "User " + user.attributes.username + " role has been changed"
+      $scope.alerts.info = "User " + user.get('username') + " role has been changed"
       $scope.$apply();
     }, function(error) {
       $scope.alerts.error = error.message
@@ -134,9 +134,9 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
   $scope.facilityName = function(user) {
     if (user.attributes.facility) {
       facilities = $filter('filter')($scope.facilities, function(object) {
-        return object.id === user.attributes.facility.id
+        return object.id === user.get('facility').id
       })
-      return facilities[0] ? facilities[0].attributes.name : "";
+      return facilities[0] ? facilities[0].get('name') : "";
     }
   }
 
@@ -148,11 +148,11 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
       roleName: $scope.newUser.role,
       assignedUnits: []
     }).then(function(user) {
-      $scope.alerts.info = "User " + user.attributes.username + " has been created"
+      $scope.alerts.info = "User " + user.get('username') + " has been created"
       if ($scope.newUser.role) {
         user.roleName = $filter('filter')($scope.roles, {
           id: $scope.newUser.role
-        })[0].attributes.name;
+        })[0].get('name');
       }
       $scope.newUser.facility = null
       $scope.newUser.role = null
