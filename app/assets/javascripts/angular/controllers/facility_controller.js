@@ -4,7 +4,7 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function(
     notifications: true
   }
   $scope.edit = {
-    toggle:[]
+    toggle: []
   }
   $scope.facility = null;
 
@@ -15,7 +15,7 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function(
 
       query.get(Parse.User.current().get('facility').id).then(function(facility) {
         $scope.facility = facility;
-        $scope.editFacility = facility;
+        $scope.editFacility = angular.copy(facility.attributes)
 
         var Unit = Parse.Object.extend("Unit");
         var query = new Parse.Query("Unit");
@@ -51,12 +51,20 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function(
     }
   }, true);
 
-  $scope.toggleData = function(data){
+  $scope.toggleData = function(data) {
     $scope.edit.toggle[data] = $scope.edit.toggle[data] ? false : true;
   }
 
-  $scope.updateFacility = function(facility){
-    debugger
+  $scope.updateFacility = function(type) {
+    $scope.facility.set(type, $scope.editFacility[type])
+    $scope.facility.save().then(function(value) {
+      $scope.edit.toggle[type] = false;
+      $scope.alerts.info = "Facility has been updated."
+      $scope.$apply();
+    }, function(error) {
+      $scope.alerts.error = error.message
+      $scope.$apply();
+    })
   }
 
   $scope.unitNames = function(facility) {
