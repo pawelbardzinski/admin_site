@@ -50,8 +50,8 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
 
 
   $scope.destroyUser = function(user) {
-    Parse.Cloud.run("destroyUser", {
-      userId: user.id
+    Parse.Cloud.run("deleteUser", {
+      username: user.attributes.username
     }).then(function(result) {
       singleObject = $filter('filter')($scope.users, function(object) {
         return object.id === result.id;
@@ -63,6 +63,7 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
       $scope.alerts.error = error.message
       $scope.$apply();
     })
+
   }
 
 
@@ -89,11 +90,11 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
   }
 
   $scope.updatePassword = function(user) {
-    Parse.Cloud.run("updatePasswordForUser", {
-      userId: user.id,
+    Parse.Cloud.run("updateUser", {
+      username: user.attributes.username,
       password: $scope.editUser.password[user.id]
     }).then(function(result) {
-      $scope.alerts.info = "User" + user.attributes.username + "password has been changed"
+      $scope.alerts.info = "User " + user.attributes.username + " password has been changed"
       user.inputForPasswordIsShow = false;
       $scope.editUser.password[user.id] = ""
       $scope.$apply();
@@ -104,21 +105,20 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
   }
 
   $scope.updateRole = function(user) {
-    roleId = $scope.editUser.role[user.id]
-    Parse.Cloud.run("updateRoleForUser", {
-      userId: user.id,
-      roleId: roleId
+    Parse.Cloud.run("updateUserRole", {
+      username: user.attributes.username,
+      role: $scope.editUser.role[user.id],
+      assignedUnits: []
     }).then(function(result) {
-      user.roleName = $filter('filter')($scope.roles, {
-        id: roleId
-      })[0].attributes.name;
+      user.roleName = $scope.editUser.role[user.id];
       user.inputForRoleIsShow = false;
-      $scope.alerts.info = "User" + user.attributes.username + "role has been changed"
+      $scope.alerts.info = "User " + user.attributes.username + " role has been changed"
       $scope.$apply();
     }, function(error) {
       $scope.alerts.error = error.message
       $scope.$apply();
     })
+
   }
 
 
@@ -141,13 +141,14 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
   }
 
   $scope.addNewUser = function() {
-    Parse.Cloud.run("createNewUser", {
+    Parse.Cloud.run("createUser", {
       username: $scope.newUser.username,
       password: $scope.newUser.password,
       facilityId: $scope.newUser.facility,
-      roleId: $scope.newUser.role
+      roleName: $scope.newUser.role,
+      assignedUnits: []
     }).then(function(user) {
-      $scope.alerts.info = "User" + user.attributes.username + "has been created"
+      $scope.alerts.info = "User " + user.attributes.username + " has been created"
       if ($scope.newUser.role) {
         user.roleName = $filter('filter')($scope.roles, {
           id: $scope.newUser.role

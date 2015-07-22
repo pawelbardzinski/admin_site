@@ -21,7 +21,7 @@
           </div>
           <div class="medium-12 large-6 columns">
             <label>Role</label>
-            <select2 style="width: 100%;" ng-model="newUser.role" s2-options="role.id as role.attributes.name for role in roles"></select2>
+            <select2 style="width: 100%;" ng-model="newUser.role" s2-options="role.attributes.name as role.attributes.name for role in roles"></select2>
           </div>
           <button type="submit" class="small-button small-top-margin small-left-margin">
             Create User
@@ -60,7 +60,7 @@
             </form>
             <button ng-hide="user.inputForRoleIsShow" ng-click="showInputForRole(user)" class="info small-button">{{user.roleName ? "Update role" : "Add role"}}</button>
             <form ng-show="user.inputForRoleIsShow" ng-submit="updateRole(user)" name="role_form">
-              <select2 style="width: 100%;" ng-model="editUser.role[user.id]" s2-options="role.id as role.attributes.name for role in roles"></select2>
+              <select2 style="width: 100%;" ng-model="editUser.role[user.id]" s2-options="role.attributes.name as role.attributes.name for role in roles"></select2>
               <button ng-show="editUser.role[user.id]" class="success small-button small-top-margin">Click to update role</button>
             </form>
           </td>
