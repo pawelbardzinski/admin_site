@@ -1,7 +1,11 @@
 angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function($scope, $filter) {
-
   $scope.newFacility = {
     notifications: true
+  }
+  $scope.newUnit = {
+    shifTimes: [25200, 54000, 68400, 82800],
+    varianceReasons: ["Pending Admissions", "Pending Discharges", "1:1 Suicide Precautions", "1:1 Fall Risk", "Acuity High/Low - Specify", "Staffing Need Not Met - Specify", "Other"],
+    maxCensus: 35
   }
   $scope.edit = {
     toggle: []
@@ -20,7 +24,9 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function(
         var Unit = Parse.Object.extend("Unit");
         var query = new Parse.Query("Unit");
         query.include("facility");
-        return query.find({})
+        return query.find({
+          facility: $scope.facilities
+        })
       }, function(error) {
         $scope.facilitiyFetched = 'error';
       }).then(function(paramsUnits) {
@@ -34,10 +40,16 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function(
             unitName: unit.get('name')
           }
         })
-        $scope.facilityFetched = true;
-        $scope.$apply();
+        var roleQuery = new Parse.Query(Parse.Role);
+        return roleQuery.find({
+          facility: $scope.facility
+        })
       }, function(units, error) {
         $scope.facilityFetched = 'error';
+      }).then(function(roles) {
+        $scope.roles = roles;
+        $scope.facilityFetched = true;
+        $scope.$apply();
       })
     } else {
       $scope.facility = null;
@@ -71,6 +83,25 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function(
     if (facility) {
       return _.pluck(facility.unitAttributes, "unitName")
     }
+  }
+
+  $scope.createUnit = function() {
+    var Unit = Parse.Object.extend("Unit");
+    var unit = new Unit();
+    unit.set("name", $scope.newUnit.name)
+    unit.set("shifTimes", $scope.newUnit.shifTimes)
+    unit.set("varianceReasons", $scope.newUnit.varianceReasons)
+    unit.set("maxCensus", $scope.newUnit.maxCensus)
+    unit.set("facility", $scope.facility)
+
+    unit.save(null, {
+      success: function(unit) {
+        debugger
+      },
+      error: function(unit) {
+        debugger
+      }
+    });
   }
 
 

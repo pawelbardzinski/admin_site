@@ -1,5 +1,12 @@
 <div ng-include src="'templates/shared/notifications.html'"></div>
 <div class="row full-width margin-top">
+  <div>
+    <input type="text" ng-model="newUnit.name" class="form-control"></input>
+    <button type="submit" class="small-button small-top-margin small-left-margin" ng-click="createUnit()">
+      Create new Unit
+    </button>
+  </div>
+
   <div ng-show="canEditFacility() && facilityFetched == true">
     <h1>Name: {{facility.attributes.name}}</h1>
     <div class="medium-4 columns">
