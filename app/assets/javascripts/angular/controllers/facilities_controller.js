@@ -1,4 +1,4 @@
-angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function($scope, $filter) {
+angular.module('app').controller('facilitiesCtrl', ['$scope', '$filter', function($scope, $filter) {
 
   $scope.facilities = []
   $scope.facilitiesFetched = false;

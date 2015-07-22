@@ -14,11 +14,6 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
     if (Parse.User.current().get('facility')) {
       query.get(Parse.User.current().get('facility').id).then(function(result) {
         $scope.facility = result;
-        // var userQuery = new Parse.Query('User');
-        // userQuery.include("roleInfo");
-        // return userQuery.find({
-        //   facility: $scope.facility
-        // });
         var roleQuery = new Parse.Query('_Role');
         roleQuery.include("info");
         return roleQuery.find({
@@ -43,20 +38,6 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
           $scope.$apply();
         }
       )
-
-      // if ($scope.facility) {
-      //   var query = new Parse.Query('Role');
-      //   query.equalTo("facility", $scope.facility);
-      //   query.find({
-      //     success: function(results) {
-      //       $scope.roles = results;
-      //       $scope.$apply();
-      //     },
-      //     error: function(error) {
-      //       alert("Error: " + error.code + " " + error.message);
-      //     }
-      //   });
-      // }
       .then(function(results) {
           if (results) {
             _.each(results, function(value, key) {
@@ -98,34 +79,6 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
       $scope.$apply();
     })
 
-  }
-
-
-  $scope.getRoles = function() {
-    // if ($scope.facility) {
-    //   var query = new Parse.Query('Role');
-    //   query.equalTo("facility", $scope.facility);
-    //   query.find({
-    //     success: function(results) {
-    //       $scope.roles = results;
-    //       $scope.$apply();
-    //     },
-    //     error: function(error) {
-    //       alert("Error: " + error.code + " " + error.message);
-    //     }
-    //   });
-    // }
-
-    // var query = new Parse.Query('RoleInfo');
-    // query.find({
-    //   success: function(results) {
-    //     $scope.roles = results;
-    //     $scope.$apply();
-    //   },
-    //   error: function(error) {
-    //     alert("Error: " + error.code + " " + error.message);
-    //   }
-    // });
   }
 
   $scope.showInputForPassword = function(user) {

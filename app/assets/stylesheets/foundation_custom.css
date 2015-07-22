@@ -79,7 +79,7 @@ table {
   width: 100%;
 }
 td.min-width {
-  min-width: 200px;
+  min-width: 150px;
 }
 td.max-width {
   max-width: 100px !important;

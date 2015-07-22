@@ -13,7 +13,7 @@
             <label>Password</label>
             <input type="text" ng-hide="newUser.isHidePassword" ng-model="newUser.password" required class="form-control inline"></input>
             <input type="password" ng-show="newUser.isHidePassword" ng-model="newUser.password" required class="form-control inline"></input>
-            <i tooltip-placement="right" tooltip="Click to show or hide password" ng-click="toggleNewUserPassword" class="fa fa-edit new"></i>
+            <i tooltip-placement="right" tooltip="Click to show or hide password" ng-click="toggleNewUserPassword()" class="fa fa-edit new"></i>
           </div>
           <div class="medium-12 large-6 columns">
             <label>Role</label>
@@ -45,7 +45,7 @@
           <td ng-show="isSudo()">{{user.facilityName}}</td>
           <td>{{user.createdAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
           <td>{{user.updatedAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
-          <td class="no-bottom-margin min-width" ng-show="{{isAdmin() && getRoleName(user) != 'Admin'}}">
+          <td class="no-bottom-margin min-width" ng-show="{{isAdmin() && ['Admin', 'Super User'].indexOf(getRoleName(user)) < 0}}">
             <button ng-confirm-click="You are about to destroy user! Are you SURE of this?" ng-click="destroyUser(user)" class="alert small-button">Delete User</button>
             <button ng-hide="user.inputForPasswordIsShow" ng-click="showInputForPassword(user)" class="info small-button">Update password</button>
             <form ng-show="user.inputForPasswordIsShow" ng-submit="updatePassword(user)" name="password_form" novalidate>
