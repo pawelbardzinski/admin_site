@@ -11,11 +11,11 @@
         <text class="coloured">Notifications:</text>
         {{facility.attributes.notifications}}
         <div ng-show="edit.toggle['notifications']">
-          <input ng-model="facility.attributes.notifications" type="radio" data-ng-value="true" id="notificationsTrue">
+          <input ng-model="editFacility.attributes.notifications" type="radio" data-ng-value="true" id="notificationsTrue">
           <label for="notificationsTrue">True</label>
-          <input ng-model="facility.attributes.notifications" type="radio" data-ng-value="false" id="notificationsFalse">
+          <input ng-model="editFacility.attributes.notifications" type="radio" data-ng-value="false" id="notificationsFalse">
           <label for="notificationsFalse">False</label>
-          <button type="submit" class="small-button small-top-margin small-left-margin">
+          <button type="submit" class="small-button small-top-margin small-left-margin" ng-click="updateFacility(facility)">
             Update Notifications
           </button>
         </div>
@@ -24,7 +24,7 @@
         <i tooltip-placement="top" tooltip="Click to edit or show Negative Notification Threshold value" ng-click="toggleData('negative')" class="fa fa-edit"></i>
         <text class="coloured">Negative Notification Threshold:</text> {{facility.attributes.negativeNotificationThreshold}}
         <div ng-show="edit.toggle['negative']">
-          <input type="number" ng-model="facility.attributes.negativeNotificationThreshold" class="form-control"></input>
+          <input type="number" ng-model="editFacility.attributes.negativeNotificationThreshold" class="form-control"></input>
           <button type="submit" class="small-button small-top-margin small-left-margin">
             Update Negative Notification Threshold
           </button>
@@ -34,7 +34,7 @@
         <i tooltip-placement="top" tooltip="Click to edit or show Positive Notification Threshold value" ng-click="toggleData('positive')" class="fa fa-edit"></i>
         <text class="coloured">Positive Notification Threshold:</text> {{facility.attributes.positiveNotificationThreshold}}
         <div ng-show="edit.toggle['positive']">
-          <input type="number" ng-model="facility.attributes.positiveNotificationThreshold" class="form-control"></input>
+          <input type="number" ng-model="editFacility.attributes.positiveNotificationThreshold" class="form-control"></input>
           <button type="submit" class="small-button small-top-margin small-left-margin">
             Update Positive Notification Threshold
           </button>
@@ -49,7 +49,7 @@
         <i tooltip-placement="top" tooltip="Click to edit or show Variance Reasons" ng-click="toggleData('varianceReasons')" class="fa fa-edit"></i>
         <text class="coloured">Variance Reasons:</text>
         <div ng-show="edit.toggle['varianceReasons']">
-          <textarea class="small-top-margin" msd-elastic ng-model="facility.attributes.varianceReasons" ng-list="&#10;" ng-trim="false"></textarea>
+          <textarea class="small-top-margin" msd-elastic ng-model="editFacility.attributes.varianceReasons" ng-list="&#10;" ng-trim="false"></textarea>
           <button type="submit" class="small-button small-top-margin small-left-margin">
             Update Variance Reasons
           </button>

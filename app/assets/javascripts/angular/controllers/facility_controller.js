@@ -15,6 +15,7 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function(
 
       query.get(Parse.User.current().get('facility').id).then(function(facility) {
         $scope.facility = facility;
+        $scope.editFacility = facility;
 
         var Unit = Parse.Object.extend("Unit");
         var query = new Parse.Query("Unit");
@@ -54,6 +55,9 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function(
     $scope.edit.toggle[data] = $scope.edit.toggle[data] ? false : true;
   }
 
+  $scope.updateFacility = function(facility){
+    debugger
+  }
 
   $scope.unitNames = function(facility) {
     if (facility) {
