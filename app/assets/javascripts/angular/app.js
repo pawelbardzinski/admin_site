@@ -32,14 +32,14 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '/',
       templateUrl: function() {
         if (Parse.User.current()) {
-          return 'templates/facility.html'
+          return 'templates/facilities.html'
         } else {
           return 'templates/session.html'
         }
       },
       controllerProvider: function() {
         if (Parse.User.current()) {
-          return 'facilityCtrl'
+          return 'facilitiesCtrl'
         } else {
           return 'sessionCtrl'
         }

@@ -10,34 +10,49 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
 
   $scope.getUsers = function() {
 
-    var query = new Parse.Query('User');
-    query.include("roleInfo");
-    query.find({
-      success: function(results) {
-        _.each(results, function(value, key) {
-          value.roleName = $.isEmptyObject(value.get('roleInfo')) ? "" : value.get('roleInfo').attributes.name
-        })
-        $scope.users = results;
-
-        var Facility = Parse.Object.extend("Facility");
-        var query = new Parse.Query("Facility");
-
-        query.find({
-          success: function(paramsFacilities) {
-            $scope.usersFetched = true;
-            $scope.facilities = paramsFacilities;
-            $scope.$apply();
-          },
-          error: function(units, error) {
-            $scope.facilitiesFetched = 'error';
-            $scope.$apply();
+    var query = new Parse.Query('Facility');
+    if (Parse.User.current().get('facility')) {
+      query.get(Parse.User.current().get('facility').id).then(function(result) {
+        $scope.facility = result;
+        var roleQuery = new Parse.Query('_Role');
+        roleQuery.include("info");
+        return roleQuery.find({
+          "facility": $scope.facility
+        });
+      }, function(error) {
+        $scope.users = [];
+        $scope.usersFetched = true;
+        $scope.$apply();
+      }).then(function(results) {
+          $scope.roles = results;
+          var userQuery = new Parse.Query('User');
+          userQuery.include("roleInfo");
+          return userQuery.find({
+            facility: $scope.facility
+          });
+        },
+        function(error) {
+          console.log(error)
+          $scope.users = [];
+          $scope.usersFetched = true;
+          $scope.$apply();
+        }
+      )
+      .then(function(results) {
+          if (results) {
+            _.each(results, function(value, key) {
+              value.roleName = $.isEmptyObject(value.get('roleInfo')) ? "" : value.get('roleInfo').get('name')
+              value.facilityName = $scope.facility.get('name');
+            })
+            $scope.users = results;
           }
-        })
-      },
-      error: function(error) {
-        alert("Error: " + error.code + " " + error.message);
-      }
-    });
+          $scope.usersFetched = true;
+          $scope.$apply();
+        },
+        function(error) {})
+    } else {
+      $scope.users = [];
+    }
 
   }
 
@@ -64,21 +79,6 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
       $scope.$apply();
     })
 
-  }
-
-
-  $scope.getRoles = function() {
-
-    var query = new Parse.Query('RoleInfo');
-    query.find({
-      success: function(results) {
-        $scope.roles = results;
-        $scope.$apply();
-      },
-      error: function(error) {
-        alert("Error: " + error.code + " " + error.message);
-      }
-    });
   }
 
   $scope.showInputForPassword = function(user) {
@@ -130,29 +130,17 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
     $scope.newUser.isHidePassword = $scope.newUser.isHidePassword ? false : true
   }
 
-
-  $scope.facilityName = function(user) {
-    if (user.attributes.facility) {
-      facilities = $filter('filter')($scope.facilities, function(object) {
-        return object.id === user.get('facility').id
-      })
-      return facilities[0] ? facilities[0].get('name') : "";
-    }
-  }
-
   $scope.addNewUser = function() {
     Parse.Cloud.run("createUser", {
       username: $scope.newUser.username,
       password: $scope.newUser.password,
-      facilityId: $scope.newUser.facility,
+      facilityId: $scope.facility.id,
       roleName: $scope.newUser.role,
       assignedUnits: []
     }).then(function(user) {
       $scope.alerts.info = "User " + user.get('username') + " has been created"
       if ($scope.newUser.role) {
-        user.roleName = $filter('filter')($scope.roles, {
-          id: $scope.newUser.role
-        })[0].get('name');
+        user.roleName = $scope.newUser.role;
       }
       $scope.newUser.facility = null
       $scope.newUser.role = null
@@ -167,7 +155,5 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
     })
   }
 
-  $scope.getRoles();
   $scope.getUsers();
-
 }]);
