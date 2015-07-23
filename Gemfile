@@ -29,7 +29,6 @@ gem 'angular-ui-bootstrap-rails'
 
 gem 'foundation-rails'
 gem 'underscore-rails'
-# gem 'angular-rails-templates', '~> 0.2.0'
 gem 'angularjs-rails'
 # Use Unicorn as the app server
 # gem 'unicorn'

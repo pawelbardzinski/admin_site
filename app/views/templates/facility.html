@@ -6,7 +6,6 @@
       Create new Unit
     </button>
   </div>
-
   <div ng-show="canEditFacility() && facilityFetched == true">
     <h1>Name: {{facility.attributes.name}}</h1>
     <div class="medium-4 columns">
@@ -60,6 +59,7 @@
           <button type="submit" class="small-button small-top-margin small-left-margin" ng-click="updateFacility('varianceReasons')">
             Update Variance Reasons
           </button>
+
         </div>
         <ul ng-hide="edit.toggle['varianceReasons']" class="listing">
           <li ng-repeat="varianceReason in facility.attributes.varianceReasons">
@@ -72,8 +72,11 @@
       <h5>
         <text class="coloured">Units:</text>
         <ul class="listing">
-          <li ng-repeat="unit in facility.unitAttributes">
-            {{unit.unitName}}
+          <li class="no-list-style margin-bottom-top big-margin-left" ng-repeat="unit in units">
+            <a href="#" editable-text="unit.attributes.name" onbeforesave="updateUnit($data, unit.id, unit.get('name'))">{{unit.get('name')}}</a>
+            <button ng-confirm-click="You are about to destroy unit! Are you SURE of this?" type="submit" class="small-button alert right no-bottom-margin" ng-click="destroyUnit(unit.id)">
+              Destroy Unit
+            </button>
           </li>
         </ul>
       </h5>

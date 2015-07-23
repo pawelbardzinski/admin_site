@@ -117,7 +117,6 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
       $scope.alerts.error = error.message
       $scope.$apply();
     })
-
   }
 
 

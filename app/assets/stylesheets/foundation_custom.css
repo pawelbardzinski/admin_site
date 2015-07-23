@@ -44,6 +44,13 @@ div.alert-box.round {
 .small-left-margin {
   margin-left: 15px;
 }
+.margin-bottom-top {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.big-margin-left {
+  margin-left: -30px;
+}
 textarea {
   margin-bottom: 0px;
   resize: none;
@@ -60,7 +67,7 @@ table#users_table tbody tr form {
   right: 8px;
   top: 12px;
 }
-.fa{
+.fa {
   cursor: pointer;
 }
 .new {
@@ -86,12 +93,29 @@ td.min-width {
 td.max-width {
   max-width: 100px !important;
 }
-
-.coloured{
+.coloured {
   color: #008cba;
 }
-
-.listing{
+.listing {
   margin-left: 40px;
   margin-top: 10px;
+}
+.no-list-style {
+  list-style: none;
+}
+li.no-list-style form.editable-wrap span.editable-controls input.editable-has-buttons {
+  height: 55px;
+}
+li.no-list-style{
+  height: 40px;
+}
+.editable-error {
+  color: #800000;
+}
+form.ng-submitted input.editable-input.ng-dirty {
+  border: 2px solid;
+  color: #800000;
+}
+.right{
+  float: right;
 }

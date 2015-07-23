@@ -1,5 +1,5 @@
 var app;
-app = angular.module('app', ['angularSpinner', 'ui.router', 'rails', 'monospaced.elastic', 'ui.bootstrap', 'rt.select2']);
+app = angular.module('app', ['angularSpinner', 'ui.router', 'rails', 'monospaced.elastic', 'ui.bootstrap', 'rt.select2', "xeditable"]);
 app.config(["$httpProvider", function($httpProvider) {
   var authToken;
   authToken = $("meta[name=\"csrf-token\"]").attr("content");
