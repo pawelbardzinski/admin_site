@@ -31,15 +31,6 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function(
         $scope.facilitiyFetched = 'error';
       }).then(function(paramsUnits) {
         $scope.units = paramsUnits;
-        // var facilityUnits = $filter('filter')($scope.units, function(object) {
-        //   return object.get('facility') && object.get('facility').id === $scope.facility.id
-        // });
-        // $scope.facility.unitAttributes = _.map(facilityUnits, function(unit) {
-        //   return {
-        //     unitId: unit.id,
-        //     unitName: unit.get('name')
-        //   }
-        // })
         var roleQuery = new Parse.Query(Parse.Role);
         roleQuery.include("info");
         roleQuery.equalTo("facility", $scope.facility);
