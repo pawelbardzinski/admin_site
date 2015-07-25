@@ -32,14 +32,14 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       url: '/',
       templateUrl: function() {
         if (Parse.User.current()) {
-          return 'templates/facilities.html'
+          return 'templates/facility.html'
         } else {
           return 'templates/session.html'
         }
       },
       controllerProvider: function() {
         if (Parse.User.current()) {
-          return 'facilitiesCtrl'
+          return 'facilityCtrl'
         } else {
           return 'sessionCtrl'
         }
@@ -56,6 +56,22 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       controllerProvider: function() {
         if (Parse.User.current()) {
           return 'facilityCtrl'
+        } else {
+          return 'sessionCtrl'
+        }
+      }
+    }).state('facilities', {
+      url: "/facilities",
+      templateUrl: function() {
+        if (Parse.User.current()) {
+          return 'templates/facilities.html'
+        } else {
+          return 'templates/session.html'
+        }
+      },
+      controllerProvider: function() {
+        if (Parse.User.current()) {
+          return 'facilitiesCtrl'
         } else {
           return 'sessionCtrl'
         }
