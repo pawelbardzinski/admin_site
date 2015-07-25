@@ -9,6 +9,7 @@ angular.module('app').controller('facilitiesCtrl', ['$scope', '$filter', functio
   $scope.getFacility = function() {
     var Facility = Parse.Object.extend("Facility");
     var query = new Parse.Query("Facility");
+    query.notEqualTo("deleted", true);
 
     query.find({
       success: function(paramsFacilities) {
@@ -73,6 +74,18 @@ angular.module('app').controller('facilitiesCtrl', ['$scope', '$filter', functio
 
   $scope.unitNames = function(facility) {
     return _.pluck(facility.unitAttributes, "unitName").join(', ')
+  }
+
+  $scope.destroyFacility = function(facility) {
+    facility.set("deleted", true)
+    facility.save().then(function(facilityResponse) {
+      $scope.facilities.splice($scope.facilities.indexOf(facility), 1);
+      $scope.alerts.info = "Facility has been deleted."
+      $scope.$apply();
+    }, function(error) {
+      $scope.alerts.info = error.message
+      $scope.$apply();
+    })
   }
 
 

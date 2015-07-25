@@ -44,6 +44,7 @@
         <th>Variance Reasons</th>
         <th>Units</th>
         <th>Created At</th>
+        <th ng-show="isAdmin()">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -56,6 +57,9 @@
         <td>{{facility.attributes.varianceReasons.join(", ")}}</td>
         <td>{{unitNames(facility)}}</td>
         <td>{{facility.createdAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
+        <td class="no-bottom-margin min-width" ng-show="isAdmin()">
+          <button ng-confirm-click="You are about to destroy facility! Are you SURE of this?" ng-click="destroyFacility(facility)" class="alert small-button">Delete</button>
+        </td>
       </tr>
     </tbody>
   </table>
