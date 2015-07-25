@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   get '/users' => 'users#index'
   get '/facility' => 'facilities#facility'
+  get '/facilities' => 'facilities#index'
 
 
   get '/templates/:path.html' => 'templates#template', :constraints => { :path => /.+/  }

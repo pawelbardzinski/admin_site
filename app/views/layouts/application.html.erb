@@ -32,8 +32,8 @@
       <ul class="left">
         <li><b><a ui-sref="users">USERS</a></b></li>
       </ul>
-      <ul class="left">
-        <li><b><a ui-sref="index">FACILITIES</a></b></li>
+      <ul ng-show="isAdmin()" class="left">
+        <li><b><a ui-sref="facilities">FACILITIES</a></b></li>
       </ul>
       <ul class="right">
         <li><a href="#">You are signed in as: {{user.currentUser.get('username')}} </a></li>
