@@ -123,15 +123,12 @@ form.ng-submitted input.editable-input.ng-dirty {
   float: right;
 }
 .with-icon {
-  width: calc(100% - 18px) !important;
+  width: calc(100% - 24px) !important;
 }
 i.fa.fa-times {
-  margin: auto;
-}
-i.vertical-center {
+  top: calc(50% - 6px);
+  transform: translateY(50%);
   font-size: 2em;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  display: inline-block;
+  position: absolute;
+  right: 0px;
 }
