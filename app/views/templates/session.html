@@ -2,7 +2,7 @@
 <div class="large-3 large-centered columns">
   <div class="login-box">
     <div class="row">
-      <div class="large-12 columns">
+      <div class="large-12 columns small-margin-bottom">
         <form ng-submit="signInUser()">
           <div class="row">
             <div class="large-12 columns">
@@ -21,6 +21,9 @@
           </div>
         </form>
         <span ng-show="disabledButton" us-spinner="{radius:5, width:4, length: 12}"></span>
+        <a ng-hide="formForPasswordIsShowed" ng-click="showFormForPassword()">Forgotten your password?</a>
+        <input ng-model="userEmail" ng-show="formForPasswordIsShowed" type="text" class="small" placeholder="Type your email"></input>
+        <button ng-show="formForPasswordIsShowed" ng-click="sendResetPasswordEmail()" class="small">Send reset password email</button>
       </div>
     </div>
   </div>
