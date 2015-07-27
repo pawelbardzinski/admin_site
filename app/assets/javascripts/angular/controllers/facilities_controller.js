@@ -9,7 +9,7 @@ angular.module('app').controller('facilitiesCtrl', ['$scope', '$filter', functio
   $scope.getFacility = function() {
     var Facility = Parse.Object.extend("Facility");
     var query = new Parse.Query("Facility");
-    query.notEqualTo("deleted", true);
+    query.notEqualTo("archived", true);
 
     query.find({
       success: function(paramsFacilities) {
@@ -77,7 +77,7 @@ angular.module('app').controller('facilitiesCtrl', ['$scope', '$filter', functio
   }
 
   $scope.destroyFacility = function(facility) {
-    facility.set("deleted", true)
+    facility.set("archived", true)
     facility.save().then(function(facilityResponse) {
       $scope.facilities.splice($scope.facilities.indexOf(facility), 1);
       $scope.alerts.info = "Facility has been deleted."

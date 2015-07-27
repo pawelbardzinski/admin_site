@@ -25,7 +25,7 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function(
         var query = new Parse.Query("Unit");
         query.include("facility");
         query.equalTo("facility", $scope.facility);
-        query.notEqualTo("deleted", true);
+        query.notEqualTo("archived", true);
         return query.find({})
       }, function(error) {
         $scope.facilitiyFetched = 'error';
@@ -141,7 +141,7 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function(
         return value
       }
     })
-    unit.set("deleted", true)
+    unit.set("archived", true)
     unit.save().then(function(unitResponse) {
       $scope.units.splice($scope.units.indexOf(unit), 1);
       $scope.alerts.info = "Unit has been deleted."
