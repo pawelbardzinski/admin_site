@@ -35,6 +35,9 @@ div.alert-box.round {
 .margin-bottom {
   margin-bottom: 30px;
 }
+.small-margin-bottom {
+  margin-bottom: 10px;
+}
 .no-bottom-margin {
   margin-bottom: 0px;
 }
