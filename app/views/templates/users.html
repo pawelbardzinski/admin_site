@@ -52,7 +52,8 @@
               <input type="text" ng-hide="editUser.isHidePassword[user.id]" ng-model="editUser.password[user.id]" required class="form-control inline"></input>
               <input type="password" ng-show="editUser.isHidePassword[user.id]" ng-model="editUser.password[user.id]" required class="form-control inline"></input>
               <i tooltip-placement="right" tooltip="Click to show or hide password" ng-click="togglePassword(user.id)" class="fa fa-edit icon"></i>
-              <button ng-show="user.inputForPasswordIsShow" class="success small-button">Click to update password</button>
+              <button ng-show="user.inputForPasswordIsShow" class="success small-button with-icon">Click to update password</button>
+              <i ng-click="hidePasswordCancel(user.id)" class="fa fa-times vertical-center"></i>
             </form>
             <button ng-hide="user.inputForRoleIsShow" ng-click="showInputForRole(user)" class="info small-button">{{user.roleName ? "Update role" : "Add role"}}</button>
             <form ng-show="user.inputForRoleIsShow" ng-submit="updateRole(user)" name="role_form">

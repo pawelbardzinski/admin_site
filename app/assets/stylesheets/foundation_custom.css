@@ -109,7 +109,7 @@ td.max-width {
 li.no-list-style form.editable-wrap span.editable-controls input.editable-has-buttons {
   height: 55px;
 }
-li.no-list-style{
+li.no-list-style {
   height: 40px;
 }
 .editable-error {
@@ -119,6 +119,19 @@ form.ng-submitted input.editable-input.ng-dirty {
   border: 2px solid;
   color: #800000;
 }
-.right{
+.right {
   float: right;
+}
+.with-icon {
+  width: calc(100% - 18px) !important;
+}
+i.fa.fa-times {
+  margin: auto;
+}
+i.vertical-center {
+  font-size: 2em;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-block;
 }
