@@ -58,13 +58,13 @@
         <td>{{unitNames(facility)}}</td>
         <td>{{facility.createdAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
         <td class="no-bottom-margin min-width">
-          <button ng-confirm-click="You are about to destroy facility! Are you SURE of this?" ng-click="destroyFacility(facility)" class="alert small-button">Delete</button>
+          <button ng-confirm-click="Are you sure?" ng-click="destroyFacility(facility)" class="alert small-button">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
   <div ng-hide="facilitiesFetched">
-    Fetching data, please wait.
+    Fetching...
   </div>
   <div ng-show="facilitiesFetched == 'error'">
     There was a problem with fetching data, please refresh your page.
