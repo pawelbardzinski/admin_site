@@ -88,6 +88,10 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
     user.inputForRoleIsShow = true;
   }
 
+  $scope.hideInputForRole = function(user) {
+    user.inputForRoleIsShow = false;
+  }
+
   $scope.updatePassword = function(user) {
     Parse.Cloud.run("updateUser", {
       username: user.get('username'),
@@ -151,6 +155,9 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
       $scope.alerts.error = error.message
       $scope.$apply();
     })
+  }
+  $scope.hidePasswordCancel = function(user){
+    user.inputForPasswordIsShow = false;
   }
 
   $scope.getUsers();
