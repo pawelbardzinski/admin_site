@@ -52,5 +52,6 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-stack_explorer'
   gem 'pry-doc'
+  gem 'jasmine'
   gem 'jasmine-rails', '~> 0.10.8'
 end

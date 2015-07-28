@@ -239,6 +239,7 @@ DEPENDENCIES
   font-awesome-rails (~> 4.3.0.0)
   foundation-rails
   guard-jasmine
+  jasmine
   jasmine-rails (~> 0.10.8)
   jbuilder (~> 2.0)
   jquery-rails
