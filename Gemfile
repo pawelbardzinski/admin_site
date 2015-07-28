@@ -42,7 +42,7 @@ group :development, :test do
   gem 'pry', '~> 0.10.1'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
-
+  gem 'guard-jasmine'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
@@ -52,4 +52,5 @@ group :development, :test do
   gem 'pry-rails'
   gem 'pry-stack_explorer'
   gem 'pry-doc'
+  gem 'jasmine-rails', '~> 0.10.8'
 end

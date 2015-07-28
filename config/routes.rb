@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
 
+  mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   root 'templates#index'
 
   get '/users' => 'users#index'
   get '/facility' => 'facilities#facility'
   get '/facilities' => 'facilities#index'
+
 
 
   get '/templates/:path.html' => 'templates#template', :constraints => { :path => /.+/  }
