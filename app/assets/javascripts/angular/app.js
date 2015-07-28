@@ -76,6 +76,22 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
           return 'sessionCtrl'
         }
       }
+    }).state('units', {
+      url: "/units/:unitId",
+      templateUrl: function() {
+        if (Parse.User.current()) {
+          return 'templates/unit.html'
+        } else {
+          return 'templates/session.html'
+        }
+      },
+      controllerProvider: function() {
+        if (Parse.User.current()) {
+          return 'unitCtrl'
+        } else {
+          return 'sessionCtrl'
+        }
+      }
     })
 })
 

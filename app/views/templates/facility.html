@@ -72,6 +72,7 @@
         <ul class="listing">
           <li class="no-list-style margin-bottom-top big-margin-left" ng-repeat="unit in units">
             <a href="#" editable-text="unit.attributes.name" onbeforesave="updateUnit($data, unit.id, unit.get('name'))">{{unit.get('name')}}</a>
+            <a ui-sref="units({unitId: unit.id})">Show</a>
             <button ng-confirm-click="Are you sure?" type="submit" class="small-button alert right no-bottom-margin" ng-click="destroyUnit(unit.id)">
               Delete Unit
             </button>
