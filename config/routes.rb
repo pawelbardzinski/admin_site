@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   get '/users' => 'users#index'
   get '/facility' => 'facilities#facility'
   get '/facilities' => 'facilities#index'
+  get '/units/:unitId' => 'units#show'
+
 
 
 

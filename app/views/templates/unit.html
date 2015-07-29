@@ -1,1 +1,26 @@
-hello
+<div class="row full-width margin-top">
+  <h2>
+    <text class="coloured">Name: </text> {{unit.get('name')}}</h2>
+  <h5>
+    <text class="coloured">Facilty: </text> {{unit.get('facility').get('name')}}</h5>
+  <h5>
+    <text class="coloured">Shift Times: </text>{{unit.get('shiftTimes').join(", ")}}</h5>
+  <h5>
+    <text class="coloured">Variance Reasons: </text>{{unit.get('varianceReasons').join(", ")}}</h5>
+  <h5>
+    <text class="coloured">staffShifts: </text>
+    <ul class="listing">
+      <ul class="no-list-style margin-bottom-top big-margin-left medium-3 columns" ng-repeat="(key, value) in staffShifts | groupBy: 'attributes.title'">
+        <h5>
+          <text class="coloured">{{key}}</text>
+        </h5>
+        <li ng-repeat="staffShift in value">
+          <h5>Day of the week: {{staffShift.get('dayOfTheWeek')}}</h5>
+          <h5>Index: {{staffShift.get('index')}}</h5>
+        </li>
+      </ul>
+    </ul>
+  </h5>
+
+
+</div>
