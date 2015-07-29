@@ -26,7 +26,7 @@ angular.module('app').controller('facilitiesCtrl', ['$scope', '$filter', functio
             _.each($scope.facilities, function(value, key) {
 
               var facilityUnits = $filter('filter')($scope.units, function(object) {
-                return object.get('facility').id === value.id
+                return object.get('facility') && object.get('facility').id === value.id
               });
               value.unitAttributes = _.map(facilityUnits, function(unit) {
                 return {

@@ -57,7 +57,6 @@
           <button type="submit" class="small-button small-top-margin small-left-margin" ng-click="updateFacility('varianceReasons')">
             Update Variance Reasons
           </button>
-
         </div>
         <ul ng-hide="edit.toggle['varianceReasons']" class="listing">
           <li ng-repeat="varianceReason in facility.attributes.varianceReasons">
@@ -72,8 +71,11 @@
         <ul class="listing">
           <li class="no-list-style margin-bottom-top big-margin-left" ng-repeat="unit in units">
             <a href="#" editable-text="unit.attributes.name" onbeforesave="updateUnit($data, unit.id, unit.get('name'))">{{unit.get('name')}}</a>
-            <button ng-confirm-click="Are you sure you want to delete '{{unit.get('name')}}' unit?" type="submit" class="small-button alert right no-bottom-margin" ng-click="destroyUnit(unit.id)">
+            <button ng-confirm-click="Are you sure you want to delete '{{unit.get('name')}}' unit?" type="submit" class="small-button alert right no-bottom-margin small-left-margin" ng-click="destroyUnit(unit.id)">
               Delete Unit
+            </button>
+            <button ui-sref="units({unitId: unit.id})" class="small-button right no-bottom-margin">
+              Show Unit
             </button>
           </li>
         </ul>

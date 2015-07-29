@@ -1,5 +1,5 @@
 var app;
-app = angular.module('app', ['angularSpinner', 'ui.router', 'rails', 'monospaced.elastic', 'ui.bootstrap', 'rt.select2', "xeditable"]);
+app = angular.module('app', ['angularSpinner', 'ui.router', 'rails', 'monospaced.elastic', 'ui.bootstrap', 'rt.select2', "xeditable", 'angular.filter']);
 app.config(["$httpProvider", function($httpProvider) {
   var authToken;
   authToken = $("meta[name=\"csrf-token\"]").attr("content");
@@ -72,6 +72,22 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
       controllerProvider: function() {
         if (Parse.User.current()) {
           return 'facilitiesCtrl'
+        } else {
+          return 'sessionCtrl'
+        }
+      }
+    }).state('units', {
+      url: "/units/:unitId",
+      templateUrl: function() {
+        if (Parse.User.current()) {
+          return 'templates/unit.html'
+        } else {
+          return 'templates/session.html'
+        }
+      },
+      controllerProvider: function() {
+        if (Parse.User.current()) {
+          return 'unitCtrl'
         } else {
           return 'sessionCtrl'
         }
