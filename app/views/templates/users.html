@@ -46,7 +46,7 @@
           <td>{{user.createdAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
           <td>{{user.updatedAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
           <td class="no-bottom-margin min-width" ng-show="{{isAdmin()}}">
-            <button ng-confirm-click="Are you sure?" ng-click="destroyUser(user)" class="alert small-button">Delete User</button>
+            <button ng-confirm-click="Are you sure you want to delete '{{user.get('username')}}' user?" ng-click="destroyUser(user)" class="alert small-button">Delete User</button>
             <button ng-hide="user.inputForPasswordIsShow" ng-click="showInputForPassword(user)" class="info small-button">Update password</button>
             <form ng-show="user.inputForPasswordIsShow" ng-submit="updatePassword(user)" name="password_form" novalidate>
               <input type="text" ng-hide="editUser.isHidePassword[user.id]" ng-model="editUser.password[user.id]" required class="form-control inline"></input>
