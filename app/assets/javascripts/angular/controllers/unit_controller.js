@@ -2,6 +2,9 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
 
   $scope.unit = null;
   $scope.facility = Parse.User.current().get('facility')
+  $scope.edit = {
+    toggle: []
+  }
 
   $scope.getUnit = function() {
     var Unit = Parse.Object.extend("Unit");
@@ -12,35 +15,26 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
       query.include('facility');
       query.get($stateParams.unitId).then(function(unit) {
         $scope.unit = unit;
+        $scope.editUnit = angular.copy(unit.attributes)
         var StaffShifts = Parse.Object.extend("StaffShift");
         var staffQuery = new Parse.Query("StaffShift");
         staffQuery.equalTo("unit", $scope.unit);
         return staffQuery.find({})
       }, function(error) {}).then(function(staffShifts) {
         $scope.staffShifts = staffShifts
-        console.log($scope.staffShifts);
         $scope.$apply();
       })
     }
   }
 
-
-
-
-
-  $scope.updateUnit = function(data, id, unitName) {
-    if (data == '') {
-      return "Unit name can't be blank.";
-    } else if (data == unitName) {
-      return "Unit name is the same as previous."
+  $scope.updateUnit = function(data) {
+    if (data == "shiftTimes") {
+      $scope.unit.set("shiftTimes", $scope.editUnit.shiftTimes)
     }
-    unit = _.detect($scope.units, function(value) {
-      if (value.id == id) {
-        return value
+    $scope.unit.save().then(function(unit) {
+      if (data == "shiftTimes") {
+        $scope.shiftTimes = $scope.editUnit.shiftTimes
       }
-    })
-    unit.set("name", data)
-    unit.save().then(function(unit) {
       $scope.alerts.info = "Unit has been updated."
     }, function(error) {
       $scope.alerts.info = error.message
@@ -62,6 +56,10 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
       $scope.alerts.info = error.message
       $scope.$apply();
     })
+  }
+
+  $scope.toggleData = function(data) {
+    $scope.edit.toggle[data] = $scope.edit.toggle[data] ? false : true;
   }
 
   $scope.getUnit();
