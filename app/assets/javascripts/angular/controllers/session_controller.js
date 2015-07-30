@@ -20,7 +20,7 @@ angular.module('app').controller('sessionCtrl', ['$scope', '$state', function($s
         $scope.user.roleInfo = Parse.User.current() && Parse.User.current().get("roleInfo");
         $scope.$emit('userChanged');
         $state.forceReload();
-        afterSuccessSignIn($scope.user.currentUser.get('username'));
+        $scope.afterSuccessSignIn($scope.user.currentUser.get('username'));
         $scope.$apply();
       },
       error: function(user, error) {
