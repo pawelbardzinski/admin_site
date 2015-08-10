@@ -21,9 +21,9 @@
           </div>
         </form>
         <span ng-show="disabledButton" us-spinner="{radius:5, width:4, length: 12}"></span>
-        <a ng-hide="formForPasswordIsShowed" ng-click="showFormForPassword()">Forgotten your password?</a>
-        <input ng-model="userEmail" ng-show="formForPasswordIsShowed" type="text" class="small" placeholder="Type your email"></input>
-        <button ng-show="formForPasswordIsShowed" ng-click="sendResetPasswordEmail()" class="small">Send reset password email</button>
+        <a ng-hide="isPasswordFormVisible" ng-click="passwordFormVisible()">Forgot your password?</a>
+        <input ng-model="userEmail" ng-show="isPasswordFormVisible" type="text" class="small" placeholder="Your email address"></input>
+        <button ng-show="isPasswordFormVisible" ng-click="sendResetPasswordEmail()" class="small">Send password reset email</button>
       </div>
     </div>
   </div>

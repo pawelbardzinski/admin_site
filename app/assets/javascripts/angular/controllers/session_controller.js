@@ -1,7 +1,7 @@
 angular.module('app').controller('sessionCtrl', ['$scope', '$state', function($scope, $state) {
 
   $scope.disabledButton = false;
-  $scope.showFormForPassword = false;
+  $scope.passwordFormVisible = false;
 
 
   $scope.afterSuccessSignIn = function(username){
@@ -33,13 +33,13 @@ angular.module('app').controller('sessionCtrl', ['$scope', '$state', function($s
     });
   }
 
-  $scope.showFormForPassword = function() {
-    $scope.formForPasswordIsShowed = true;
+  $scope.passwordFormVisible = function() {
+    $scope.isPasswordFormVisible = true;
   }
 
   $scope.sendResetPasswordEmail = function() {
     Parse.User.requestPasswordReset($scope.userEmail).then(function(user) {
-      $scope.alerts.info = "Check your email account for the Password Recovery email"
+      $scope.alerts.info = "Check your email box for the password reset email"
       $scope.$apply();
     }, function(error) {
       $scope.alerts.error = error.message

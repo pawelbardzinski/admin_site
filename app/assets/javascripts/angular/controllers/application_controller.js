@@ -50,7 +50,7 @@ angular.module('app').controller('ApplicationCtrl', ['$scope', '$state', functio
     $scope.user.password = "";
     $state.forceReload();
     $scope.error = "";
-    $scope.alerts.info = "You have been successfully logged out!"
+    $scope.alerts.info = "You have been successfully logged out"
   }
 
 }]);
