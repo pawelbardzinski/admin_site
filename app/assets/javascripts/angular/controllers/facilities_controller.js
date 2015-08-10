@@ -1,4 +1,4 @@
-angular.module('app').controller('facilitiesCtrl', ['$scope', '$filter', function($scope, $filter) {
+angular.module('app').controller('facilitiesCtrl', ['$scope', '$filter', 'FlashMessage', function($scope, $filter, FlashMessage) {
 
   $scope.facilities = []
   $scope.facilitiesFetched = false;
@@ -63,11 +63,11 @@ angular.module('app').controller('facilitiesCtrl', ['$scope', '$filter', functio
     facility.save(null, {
       success: function(facility) {
         $scope.facilities.push(facility)
-        $scope.alerts.info = "New Facility has been created"
+        FlashMessage.show("New Facility has been created", true)
         $scope.$apply();
       },
       error: function(facility, error) {
-        $scope.alerts.error = error.message
+        FlashMessage.show(error.message, false)
       }
     });
   }
@@ -80,10 +80,10 @@ angular.module('app').controller('facilitiesCtrl', ['$scope', '$filter', functio
     facility.set("archived", true)
     facility.save().then(function(facilityResponse) {
       $scope.facilities.splice($scope.facilities.indexOf(facility), 1);
-      $scope.alerts.info = "Facility has been deleted."
+      FlashMessage.show("Facility has been deleted.", true)
       $scope.$apply();
     }, function(error) {
-      $scope.alerts.info = error.message
+      FlashMessage.show(error.message, false)
       $scope.$apply();
     })
   }

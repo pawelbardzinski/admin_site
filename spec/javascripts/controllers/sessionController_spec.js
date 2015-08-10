@@ -3,24 +3,26 @@ describe('sessionCtrl', function() {
 
   var $controller;
 
-  beforeEach(inject(function(_$controller_) {
+  beforeEach(inject(function(_$controller_, _$rootScope_) {
     $controller = _$controller_;
+    $rootScope = _$rootScope_;
   }));
 
   describe('afterSuccessSignIn', function() {
     beforeEach(function() {
       $scope = {};
-      $scope.alerts = {}
+      $rootScope.alerts = {}
       var controller = $controller('sessionCtrl', {
-        $scope: $scope
+        $scope: $scope,
+        $rootScope: $rootScope
       });
       $scope.afterSuccessSignIn('John');
     })
     it('sets valid notifications', function() {
-      expect($scope.alerts.info).toEqual("You have been signed in as John");
+      expect($rootScope.alerts.info).toEqual("You have been signed in as John");
     })
     it('clears error notifications', function() {
-      expect($scope.alerts.error).toEqual("");
+      expect($rootScope.alerts.error).toEqual("");
     })
     it('hides spinner', function() {
       expect($scope.disabledButton).toEqual(false)

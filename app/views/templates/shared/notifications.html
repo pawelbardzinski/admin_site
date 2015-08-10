@@ -1,8 +1,8 @@
-<div data-alert class="alert-box alert round" ng-show="alerts.error">
-  {{alerts.error}}
-  <a ng-click="alerts.error = ''" class="close">&times;</a>
+<div data-alert class="alert-box alert round" ng-show="$root.alerts.error">
+  {{$root.alerts.error}}
+  <a ng-click="$root.alerts.error = ''" class="close">&times;</a>
 </div>
-<div data-alert class="alert-box info round" ng-show="alerts.info">
-  {{alerts.info}}
-  <a ng-click="alerts.info = ''" class="close">&times;</a>
+<div data-alert class="alert-box info round" ng-show="$root.alerts.info">
+  {{$root.alerts.info}}
+  <a ng-click="$root.alerts.info = ''" class="close">&times;</a>
 </div>

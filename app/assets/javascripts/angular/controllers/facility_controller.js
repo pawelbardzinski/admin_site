@@ -1,4 +1,4 @@
-angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function($scope, $filter) {
+angular.module('app').controller('facilityCtrl', ['$scope', '$filter', 'FlashMessage', function($scope, $filter, FlashMessage) {
   $scope.newFacility = {
     notifications: true
   }
@@ -62,10 +62,10 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function(
     $scope.facility.set(type, $scope.editFacility[type])
     $scope.facility.save().then(function(value) {
       $scope.edit.toggle[type] = false;
-      $scope.alerts.info = "Facility has been updated."
+      FlashMessage.show("Facility has been updated.", true)
       $scope.$apply();
     }, function(error) {
-      $scope.alerts.error = error.message
+      FlashMessage.show(error.message, false)
       $scope.$apply();
     })
   }
@@ -108,7 +108,7 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function(
       success: function(unit) {
         $scope.newUnit.name = ""
         $scope.units.push(unit);
-        $scope.alerts.info = "Unit has been created."
+        FlashMessage.show("Unit has been created.", true)
         $scope.$apply();
       },
       error: function(unit) {}
@@ -129,9 +129,9 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function(
     })
     unit.set("name", data)
     unit.save().then(function(unit) {
-      $scope.alerts.info = "Unit has been updated."
+      FlashMessage.show("Unit has been updated.", true)
     }, function(error) {
-      $scope.alerts.info = error.message
+      FlashMessage.show(error.message, false)
     })
   }
 
@@ -144,10 +144,10 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', function(
     unit.set("archived", true)
     unit.save().then(function(unitResponse) {
       $scope.units.splice($scope.units.indexOf(unit), 1);
-      $scope.alerts.info = "Unit has been deleted."
+      FlashMessage.show("Unit has been deleted.", false)
       $scope.$apply();
     }, function(error) {
-      $scope.alerts.info = error.message
+      FlashMessage.show(error.message, false)
       $scope.$apply();
     })
   }

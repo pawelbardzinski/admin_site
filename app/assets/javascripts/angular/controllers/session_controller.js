@@ -1,4 +1,4 @@
-angular.module('app').controller('sessionCtrl', ['$scope', '$state', function($scope, $state) {
+angular.module('app').controller('sessionCtrl', ['$scope', '$state', 'FlashMessage', function($scope, $state, FlashMessage) {
 
   $scope.disabledButton = false;
   $scope.passwordFormVisible = false;
@@ -6,8 +6,7 @@ angular.module('app').controller('sessionCtrl', ['$scope', '$state', function($s
 
   $scope.afterSuccessSignIn = function(username){
     $scope.disabledButton = false;
-    $scope.alerts.error = ""
-    $scope.alerts.info = "You have been signed in as " + username
+    FlashMessage.show("You have been signed in as " + username, true)
   }
 
 
@@ -25,9 +24,8 @@ angular.module('app').controller('sessionCtrl', ['$scope', '$state', function($s
       },
       error: function(user, error) {
         $scope.disabledButton = false;
-        $scope.alerts.info = ""
         $scope.user.password = "";
-        $scope.alerts.error = "Invalid username or password"
+        FlashMessage.show("Invalid username or password", false)
         $scope.$apply();
       }
     });
@@ -39,10 +37,10 @@ angular.module('app').controller('sessionCtrl', ['$scope', '$state', function($s
 
   $scope.sendResetPasswordEmail = function() {
     Parse.User.requestPasswordReset($scope.userEmail).then(function(user) {
-      $scope.alerts.info = "Check your email box for the password reset email"
+      FlashMessage.show("Check your email box for the password reset email", true)
       $scope.$apply();
     }, function(error) {
-      $scope.alerts.error = error.message
+      FlashMessage.show(error.message, false)
       $scope.$apply();
     })
   }

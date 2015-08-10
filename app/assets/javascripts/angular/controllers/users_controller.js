@@ -1,4 +1,4 @@
-angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', function($scope, $filter, $http) {
+angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', 'FlashMessage', function($scope, $filter, $http, FlashMessage) {
 
   $scope.usersFetched = false;
   $scope.editUser = {
@@ -6,7 +6,9 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
     role: {},
     password: {}
   }
-  $scope.newUser = {}
+  $scope.newUser = {
+    isHidePassword: true
+  }
 
   $scope.getUsers = function() {
 
@@ -71,10 +73,10 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
         return object.id === result.id;
       })[0];
       $scope.users.splice($scope.users.indexOf(singleObject), 1);
-      $scope.alerts.info = "User has been deleted"
+      FlashMessage.show("User has been deleted", true)
       $scope.$apply();
     }, function(error) {
-      $scope.alerts.error = error.message
+      FlashMessage.show(error.message, false)
       $scope.$apply();
     })
 
@@ -97,12 +99,12 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
       username: user.get('username'),
       password: $scope.editUser.password[user.id]
     }).then(function(result) {
-      $scope.alerts.info = "User " + user.get('username') + " password has been changed"
+      FlashMessage.show("User " + user.get('username') + " password has been changed", true)
       user.inputForPasswordIsShow = false;
       $scope.editUser.password[user.id] = ""
       $scope.$apply();
     }, function(error) {
-      $scope.alerts.error = error.message
+      FlashMessage.show(error.message, false)
       $scope.$apply();
     })
   }
@@ -115,10 +117,10 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
     }).then(function(result) {
       user.roleName = $scope.editUser.role[user.id];
       user.inputForRoleIsShow = false;
-      $scope.alerts.info = "User " + user.get('username') + " role has been changed"
+      FlashMessage.show("User " + user.get('username') + " role has been changed", true)
       $scope.$apply();
     }, function(error) {
-      $scope.alerts.error = error.message
+      FlashMessage.show(error.message, false)
       $scope.$apply();
     })
   }
@@ -134,8 +136,7 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
 
   $scope.addNewUser = function() {
     if (checkIfInvalidEmail($scope.newUser.username)) {
-      $scope.alerts.info = ""
-      $scope.alerts.error = "Email is invalid"
+      FlashMessage.show("Email is invalid", false)
     } else {
       Parse.Cloud.run("createUser", {
         username: $scope.newUser.username,
@@ -144,7 +145,7 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
         roleName: $scope.newUser.role,
         assignedUnits: []
       }).then(function(user) {
-        $scope.alerts.info = "User " + user.get('username') + " has been created"
+        FlashMessage.show("User " + user.get('username') + " has been created", true)
         if ($scope.newUser.role) {
           user.roleName = $scope.newUser.role;
         }
@@ -156,7 +157,7 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', fun
         $scope.users.push(user)
         $scope.$apply();
       }, function(error) {
-        $scope.alerts.error = error.message
+        FlashMessage.show(error.message, false)
         $scope.$apply();
       })
     }

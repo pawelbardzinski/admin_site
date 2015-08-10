@@ -1,7 +1,7 @@
 <div ng-include src="'templates/shared/notifications.html'"></div>
 <div ng-show="user.currentUser">
   <div class="row full-width margin-top">
-    <form class="margin-bottom" ng-submit="addNewUser()" name="user_form" ng-show="isAdmin() && usersFetched == true">
+    <form class="margin-bottom" ng-submit="addNewUser()" name="user_form" ng-show="canEditFacility() && usersFetched == true">
       <h3 style="text-align: center">Create new User</h3>
       <div class="medium-12 large-6 big-margin-top large-offset-3">
         <div class="row margin-top none-left-margin ">
@@ -31,10 +31,10 @@
           <th>Id</th>
           <th>Name</th>
           <th>Role name</th>
-          <th ng-show="isAdmin()">Facility</th>
+          <th ng-show="canEditFacility()">Facility</th>
           <th>Created At</th>
           <th>Updated At</th>
-          <th ng-show="isAdmin()">Actions</th>
+          <th ng-show="canEditFacility()">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -42,10 +42,10 @@
           <td>{{user.id}}</td>
           <td>{{user.get('username')}}</td>
           <td>{{user.roleName}}</td>
-          <td ng-show="isAdmin()">{{user.facilityName}}</td>
+          <td ng-show="canEditFacility()">{{user.facilityName}}</td>
           <td>{{user.createdAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
           <td>{{user.updatedAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
-          <td class="no-bottom-margin min-width" ng-show="{{isAdmin()}}">
+          <td class="no-bottom-margin min-width" ng-show="{{canEditFacility()}}">
             <button ng-confirm-click="Are you sure you want to delete '{{user.get('username')}}' user?" ng-click="destroyUser(user)" class="alert small-button">Delete User</button>
             <button ng-hide="user.inputForPasswordIsShow" ng-click="showInputForPassword(user)" class="info small-button">Update password</button>
             <form ng-show="user.inputForPasswordIsShow" ng-submit="updatePassword(user)" name="password_form" novalidate>

@@ -1,4 +1,4 @@
-angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams', function($scope, $filter, $stateParams) {
+angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams', 'FlashMessage', function($scope, $filter, $stateParams, FlashMessage) {
 
   $scope.unit = null;
   $scope.facility = Parse.User.current().get('facility')
@@ -54,10 +54,10 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
       if (data == "shiftTimes") {
         $scope.shiftTimes = $scope.editUnit.shiftTimes
       }
-      $scope.alerts.info = "Unit has been updated."
+      FlashMessage.show("Unit has been updated.", true)
       $scope.$apply();
     }, function(error) {
-      $scope.alerts.info = error.message
+      FlashMessage.show(error.message, false)
       $scope.$apply();
     })
   }
@@ -71,10 +71,10 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
     unit.set("archived", true)
     unit.save().then(function(unitResponse) {
       $scope.units.splice($scope.units.indexOf(unit), 1);
-      $scope.alerts.info = "Unit has been deleted."
+      FlashMessage.show("Unit has been deleted.", true)
       $scope.$apply();
     }, function(error) {
-      $scope.alerts.info = error.message
+      FlashMessage.show(error.message, false)
       $scope.$apply();
     })
   }
@@ -84,9 +84,7 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
       staffShift.set("index", $scope.editStaffShifts.shift[staffShift.id])
     })
     Parse.Object.saveAll($scope.staffShifts).then(function(staffShifts) {
-      console.log(staffShifts)
     }, function(error) {
-      console.log(error)
     })
   }
 

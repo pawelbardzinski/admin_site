@@ -1,4 +1,4 @@
-angular.module('app').controller('ApplicationCtrl', ['$scope', '$state', function($scope, $state) {
+angular.module('app').controller('ApplicationCtrl', ['$scope', '$state', 'FlashMessage', function($scope, $state, FlashMessage) {
 
   Parse.initialize("jjQlIo5A3HWAMRMCkH8SnOfimVfCi6QlOV9ZNO2T", "EK0eXjOx2Ugs26mIUgCzQOMoLBlYbc5Lba9Q6Zba");
 
@@ -8,10 +8,6 @@ angular.module('app').controller('ApplicationCtrl', ['$scope', '$state', functio
   $scope.user = {
     currentUser: Parse.User.current(),
     roleInfo: Parse.User.current() && Parse.User.current().get("roleInfo"),
-  }
-  $scope.alerts = {
-    success: "",
-    error: ""
   }
 
   $scope.checkRole = function() {
@@ -50,7 +46,7 @@ angular.module('app').controller('ApplicationCtrl', ['$scope', '$state', functio
     $scope.user.password = "";
     $state.forceReload();
     $scope.error = "";
-    $scope.alerts.info = "You have been successfully logged out"
+    FlashMessage.show("You have been successfully logged out", true)
   }
 
 }]);
