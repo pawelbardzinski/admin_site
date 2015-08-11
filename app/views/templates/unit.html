@@ -42,7 +42,7 @@
     </div>
   </div>
   <div class="row">
-    <div ng-repeat="staffShift in staffShifts | filter : {attributes.dayOfTheWeek: editStaffShifts.selectedDay}">
+    <div ng-repeat="staffShift in staffShifts | selectFromSelected:item.Value">
       {{staffShift.get('dayOfTheWeek')}}
     </div>
   </div>
