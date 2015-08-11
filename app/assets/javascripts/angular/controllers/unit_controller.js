@@ -6,10 +6,10 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
     toggle: []
   }
 
-  var dayOfTheWeeks = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+  $scope.dayOfTheWeeks = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
   $scope.editStaffShifts = {
-    selectedDay: dayOfTheWeeks[0]
+    selectedDay: 0,
     shift: {}
   }
 
@@ -88,7 +88,7 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
   }
 
   $scope.dayOfWeekAsString = function(dayIndex) {
-    return daysOfTheWeek[dayIndex];
+    return $scope.daysOfTheWeek[dayIndex];
   }
 
   $scope.dateParse = function(date) {

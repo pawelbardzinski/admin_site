@@ -28,4 +28,22 @@
       </button>
     </div>
   </h5>
+  <h5>
+    <text class="coloured">Staff Shifts: </text>
+  </h5>
+  <div class="row">
+    <div class="medium-6 medium-offset-6 columns">
+      <div class="medium-6 columns">
+        <select2 style="width: 100%;" ng-model="editStaffShifts.selectedDay" s2-options="dayOfTheWeeks.indexOf(dayOfTheWeek) as dayOfTheWeek for dayOfTheWeek in dayOfTheWeeks"></select2>
+      </div>
+      <div class="medium-6 columns">
+        <select2 style="width: 100%;" ng-model="editStaffShifts.selectedTime" s2-options="shiftTimes.indexOf(shiftTime) as dateParse(shiftTime.toString()) for shiftTime in shiftTimes"></select2>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div ng-repeat="staffShift in staffShifts | filter : {attributes.dayOfTheWeek: editStaffShifts.selectedDay}">
+      {{staffShift.get('dayOfTheWeek')}}
+    </div>
+  </div>
 </div>
