@@ -16,11 +16,9 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', 'Fl
     if (Parse.User.current().get('facility')) {
       query.get(Parse.User.current().get('facility').id).then(function(result) {
           $scope.facility = result;
-          var roleQuery = new Parse.Query('_Role');
-          roleQuery.include("info");
-          return roleQuery.find({
-            "facility": $scope.facility
-          });
+          var roleQuery = new Parse.Query(Parse.Role);
+          roleQuery.equalTo("facility", $scope.facility);
+          return roleQuery.find();
         }, function(error) {
           $scope.users = [];
           $scope.usersFetched = true;
@@ -29,9 +27,8 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', 'Fl
             $scope.roles = results;
             var userQuery = new Parse.Query('User');
             userQuery.include("roleInfo");
-            return userQuery.find({
-              facility: $scope.facility
-            });
+            userQuery.equalTo("facility", $scope.facility);
+            return userQuery.find();
           },
           function(error) {
             $scope.users = [];
