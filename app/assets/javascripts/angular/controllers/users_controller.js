@@ -17,6 +17,7 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', 'Fl
       query.get(Parse.User.current().get('facility').id).then(function(result) {
           $scope.facility = result;
           var roleQuery = new Parse.Query(Parse.Role);
+          roleQuery.include("info");
           roleQuery.equalTo("facility", $scope.facility);
           return roleQuery.find();
         }, function(error) {
