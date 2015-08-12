@@ -31,19 +31,36 @@
   <h5>
     <text class="coloured">Staff Shifts: </text>
   </h5>
-  <ul class="listing">
-    <ul class="no-list-style margin-bottom-top none-left-margin medium-3 columns" ng-repeat="(key, value) in staffShifts | groupBy: 'attributes.title'">
-      <h5>
-        <text class="coloured">{{key}}</text>
-      </h5>
-      <li ng-repeat="staffShift in value | orderBy: '+attributes.dayOfTheWeek' ">
-        <h5>{{dayOfWeekAsString(staffShift.get('dayOfTheWeek'))}}</h5>
-        <select2 style="width: 150px;" ng-model="editStaffShifts.shift[staffShift.id]" s2-options="shiftTimes.indexOf(shiftTime) as dateParse(shiftTime.toString()) for shiftTime in shiftTimes"></select2>
-      </li>
-    </ul>
-  </ul>
-  <button type="submit" class="small-button small-top-margin small-left-margin" ng-click="updateStaffSifts()">
-    Update Staff Shifts
-  </button>
+  <div class="row">
+    <div class="medium-6 medium-offset-6 columns">
+      <div class="medium-6 columns">
+        <select2 style="width: 100%;" ng-model="editStaffShifts.selectedDay" s2-options="dayOfTheWeeks.indexOf(dayOfTheWeek) as dayOfTheWeek for dayOfTheWeek in dayOfTheWeeks"></select2>
+      </div>
+      <div class="medium-6 columns">
+        <select2 style="width: 100%;" ng-model="editStaffShifts.selectedTime" s2-options="shiftTimes.indexOf(shiftTime) as dateParse(shiftTime.toString()) for shiftTime in shiftTimes"></select2>
+      </div>
+    </div>
+  </div>
+  <div class="row margin-top">
+    <table id="staff_shift_table">
+      <thead>
+          <th>Title</th>
+          <th bn-range="i in 1...35">
+            {{ i }}
+          </th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="staffShift in staffShifts | selectFromSelected:editStaffShifts.selectedDay:editStaffShifts.selectedTime">
+          <td>{{staffShift.get('title')}}</td>
+          <td ng-repeat="grid in staffShift.get('grids')[staffShift.get('index')] track by $index">
+            {{grid}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
+    <div >
+
+    </div>
+  </div>
 </div>

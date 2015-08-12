@@ -5,7 +5,12 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
   $scope.edit = {
     toggle: []
   }
+
+  $scope.dayOfTheWeeks = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
   $scope.editStaffShifts = {
+    selectedDay: 0,
+    selectedTime: 1,
     shift: {}
   }
 
@@ -79,21 +84,12 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
     })
   }
 
-  $scope.updateStaffSifts = function() {
-    _.each($scope.staffShifts, function(staffShift) {
-      staffShift.set("index", $scope.editStaffShifts.shift[staffShift.id])
-    })
-    Parse.Object.saveAll($scope.staffShifts).then(function(staffShifts) {
-    }, function(error) {
-    })
-  }
-
   $scope.toggleData = function(data) {
     $scope.edit.toggle[data] = $scope.edit.toggle[data] ? false : true;
   }
 
   $scope.dayOfWeekAsString = function(dayIndex) {
-    return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"][dayIndex];
+    return $scope.daysOfTheWeek[dayIndex];
   }
 
   $scope.dateParse = function(date) {
