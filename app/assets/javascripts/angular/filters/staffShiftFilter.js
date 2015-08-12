@@ -1,4 +1,4 @@
-app.filter('selectFromSelected', [function() {
+app.filter('staffShiftFilter', [function() {
   return function(values, date, time) {
     if (values && $.isNumeric(date) && $.isNumeric(time)) {
 
@@ -8,15 +8,7 @@ app.filter('selectFromSelected', [function() {
         }
       })
       return out
-    }
-    // if (value) {
-    //   for (x = 0; x < incItems.length; x++) {
-    //     if (incItems[x].Value == value)
-    //       out.push(incItems[x]);
-    //   }
-    //   return out;
-    // }
-    else {
+    } else {
       return values
     }
   };

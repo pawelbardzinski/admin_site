@@ -44,13 +44,13 @@
   <div class="row margin-top">
     <table id="staff_shift_table">
       <thead>
-          <th>Title</th>
-          <th bn-range="i in 1...35">
-            {{ i }}
-          </th>
+        <th>Title</th>
+        <th bn-range="i in 1...35">
+          {{ i }}
+        </th>
       </thead>
       <tbody>
-        <tr ng-repeat="staffShift in staffShifts | selectFromSelected:editStaffShifts.selectedDay:editStaffShifts.selectedTime">
+        <tr ng-repeat="staffShift in staffShifts | staffShiftFilter:editStaffShifts.selectedDay:editStaffShifts.selectedTime">
           <td>{{staffShift.get('title')}}</td>
           <td ng-repeat="grid in staffShift.get('grids')[staffShift.get('index')] track by $index">
             {{grid}}
@@ -59,7 +59,7 @@
       </tbody>
     </table>
 
-    <div >
+    <div>
 
     </div>
   </div>
