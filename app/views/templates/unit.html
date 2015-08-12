@@ -51,9 +51,10 @@
       </thead>
       <tbody>
         <tr ng-repeat="staffShift in staffShifts | staffShiftFilter:editStaffShifts.selectedDay:editStaffShifts.selectedTime">
+          {{staffShift}}
           <td>{{staffShift.get('title')}}</td>
           <td ng-repeat="grid in staffShift.get('grids')[editStaffShifts.selectedTime] track by $index">
-            {{grid}}
+            <a href="#" editable-text="grid" onbeforesave="updateUnit($data, unit.id, unit.get('name'))">{{grid}}</a>
           </td>
         </tr>
       </tbody>
