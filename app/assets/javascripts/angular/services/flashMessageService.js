@@ -1,4 +1,4 @@
-app.factory('FlashMessage', ['$rootScope', '$timeout', function($rootScope, $timeout) {
+angular.module('app').factory('FlashMessage', ['$rootScope', '$timeout', function($rootScope, $timeout) {
   $rootScope.alerts = {}
 
   return {
