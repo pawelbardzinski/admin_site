@@ -10,6 +10,7 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
 
   $scope.editStaffShifts = {
     selectedDay: 0,
+    selectedTime: 1,
     shift: {}
   }
 

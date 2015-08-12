@@ -30,7 +30,7 @@ div.alert-box.round {
   margin-left: 0px !important;
 }
 .margin-top {
-  margin-top: 25px;
+  margin-top: 25px !important;
 }
 .margin-bottom {
   margin-bottom: 30px;

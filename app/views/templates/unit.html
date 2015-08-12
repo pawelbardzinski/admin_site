@@ -41,9 +41,26 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div ng-repeat="staffShift in staffShifts | selectFromSelected:item.Value">
-      {{staffShift.get('dayOfTheWeek')}}
+  <div class="row margin-top">
+    <table id="staff_shift_table">
+      <thead>
+          <th>Title</th>
+          <th bn-range="i in 1...35">
+            {{ i }}
+          </th>
+      </thead>
+      <tbody>
+        <tr ng-repeat="staffShift in staffShifts | selectFromSelected:editStaffShifts.selectedDay:editStaffShifts.selectedTime">
+          <td>{{staffShift.get('title')}}</td>
+          <td ng-repeat="grid in staffShift.get('grids')[staffShift.get('index')] track by $index">
+            {{grid}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div >
+
     </div>
   </div>
 </div>
