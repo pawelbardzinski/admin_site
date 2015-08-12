@@ -6,6 +6,11 @@ angular.module('app').controller('facilitiesCtrl', ['$scope', '$filter', 'FlashM
     notifications: true
   }
 
+  $scope.newFacility.varianceReasons = ["Pending Admissions",
+    "Pending Discharges", "1:1 Suicide Precautions", "1:1 Fall Risk",
+    "Acuity High/Low - Specify", "Staffing Need Not Met - Specify"
+  ]
+
   $scope.getFacility = function() {
     var Facility = Parse.Object.extend("Facility");
     var query = new Parse.Query("Facility");
