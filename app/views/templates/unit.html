@@ -52,7 +52,7 @@
       <tbody>
         <tr ng-repeat="staffShift in staffShifts | staffShiftFilter:editStaffShifts.selectedDay:editStaffShifts.selectedTime">
           <td>{{staffShift.get('title')}}</td>
-          <td ng-repeat="grid in staffShift.get('grids')[staffShift.get('index')] track by $index">
+          <td ng-repeat="grid in staffShift.get('grids')[editStaffShifts.selectedTime] track by $index">
             {{grid}}
           </td>
         </tr>

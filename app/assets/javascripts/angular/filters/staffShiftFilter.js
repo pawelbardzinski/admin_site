@@ -3,7 +3,7 @@ app.filter('staffShiftFilter', [function() {
     if (values && $.isNumeric(date) && $.isNumeric(time)) {
 
       out = _.select(values, function(value) {
-        if (value.get('dayOfTheWeek') == date && value.get('index') == time) {
+        if (value.get('dayOfTheWeek') == date) {
           return value
         }
       })
