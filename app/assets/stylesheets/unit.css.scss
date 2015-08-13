@@ -1,20 +1,23 @@
 #staff_shift_table {
   input.editable-input {
-    width: 30px;
+    width: 40px;
     margin-top: 10px;
   }
   button{
     top: -7px;
     margin-bottom: 0px;
-    padding: 5px 10px;
+  }
+  button:nth-child(1){
+    top: -3px;
+    padding: 5px 15px;
   }
   button:nth-child(2){
-    // bottom: -26px;
-    top: 28px;
-    left: -60px;
+    padding: 5px 10px;
+    top: 32px;
+    left: -69px;
   }
   .editable-buttons{
     height: 60px;
-    width: 75px;
+    width: 67px;
   }
 }

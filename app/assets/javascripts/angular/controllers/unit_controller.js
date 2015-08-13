@@ -96,5 +96,20 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
     return $filter('date')(parseInt(date) * 1000, 'HH:mm', 'Z')
   }
 
+  $scope.updateGrid = function(data, staffShift, timeIndex, index) {
+    value = parseInt(data)
+    if (isNaN(value)) {
+      return "It's not a number";
+    }
+    staffShift.get('grids')[timeIndex][index] = value
+    staffShift.save().then(function(staffShift) {
+      FlashMessage.show("Grid has been updated.", true)
+      $scope.$apply();
+    }, function(error) {
+      FlashMessage.show(error.message, false)
+      $scope.$apply();
+    })
+  }
+
   $scope.getUnit();
 }]);
