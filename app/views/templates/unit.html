@@ -10,7 +10,7 @@
     <text class="coloured">Facilty: </text> {{unit.get('facility').get('name')}}</h5>
   <h5>
     <i tooltip-placement="top" tooltip="Click to edit or show Shift Times" ng-click="toggleData('shiftTimes')" class="fa fa-edit"></i>
-    <text class="coloured">Shift Times: </text>{{shiftTimes.join(", ")}}
+    <text class="coloured">Shift Times: </text>{{(shiftTimes | timestampToHHMMFilter).join(", ")}}
     <div ng-show="edit.toggle['shiftTimes']">
       <textarea class="small-top-margin" msd-elastic ng-model="editUnit.shiftTimes" ng-list="&#10;" ng-trim="false"></textarea>
       <button type="submit" class="small-button small-top-margin small-left-margin" ng-click="updateUnit('shiftTimes')">
@@ -45,7 +45,7 @@
     <table id="staff_shift_table">
       <thead>
         <th>Title</th>
-        <th bn-range="i in 1...35">
+        <th bn-range="i in 0..35">
           {{ i }}
         </th>
       </thead>

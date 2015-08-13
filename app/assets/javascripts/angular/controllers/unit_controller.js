@@ -24,6 +24,7 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
       query.get($stateParams.unitId).then(function(unit) {
         $scope.unit = unit;
         $scope.editUnit = angular.copy(unit.attributes)
+        $scope.editUnit.shiftTimes = $filter('timestampToHHMMFilter')(unit.get('shiftTimes'))
         var StaffShifts = Parse.Object.extend("StaffShift");
         var staffQuery = new Parse.Query("StaffShift");
         staffQuery.equalTo("unit", $scope.unit);
@@ -41,23 +42,29 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
 
   $scope.updateUnit = function(data, name) {
     if (data == "shiftTimes") {
-      $scope.unit.set("shiftTimes", $scope.editUnit.shiftTimes.map(Number))
-      $scope.toggleData('shiftTimes')
+      var arrayOfTime = _.map($scope.editUnit.shiftTimes, function(time) {
+        timeArray = time.split(':');
+        hours = timeArray[0];
+        minutes = timeArray[1];
+        return hours * 3600 + minutes * 60;
+      })
+      $scope.unit.set("shiftTimes", arrayOfTime);
+      $scope.toggleData('shiftTimes');
     } else if (data == "varianceReasons") {
-      $scope.unit.set("varianceReasons", $scope.editUnit.varianceReasons)
-      $scope.toggleData('varianceReasons')
+      $scope.unit.set("varianceReasons", $scope.editUnit.varianceReasons);
+      $scope.toggleData('varianceReasons');
     } else if (data == "name") {
       if (name == '') {
         return "Unit name can't be blank.";
       } else if (name == $scope.unit.get('name')) {
-        return "Unit name is the same as previous."
+        return "Unit name is the same as previous.";
       } else {
-        $scope.unit.set("name", name)
+        $scope.unit.set("name", name);
       }
     }
     $scope.unit.save().then(function(unit) {
       if (data == "shiftTimes") {
-        $scope.shiftTimes = $scope.editUnit.shiftTimes
+        $scope.shiftTimes = unit.get('shiftTimes');
       }
       FlashMessage.show("Unit has been updated.", true)
       $scope.$apply();
