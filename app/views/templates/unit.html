@@ -54,7 +54,7 @@
           {{staffShift}}
           <td>{{staffShift.get('title')}}</td>
           <td ng-repeat="grid in staffShift.get('grids')[editStaffShifts.selectedTime] track by $index">
-            <a href="#" editable-text="grid" onbeforesave="updateGrid($data, staffShift, editStaffShifts.selectedTime, $index)">{{grid}}</a>
+            <a href="#" editable-number="grid" onbeforesave="updateGrid($data, staffShift, editStaffShifts.selectedTime, $index)">{{grid}}</a>
           </td>
         </tr>
       </tbody>

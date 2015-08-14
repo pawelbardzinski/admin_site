@@ -1,6 +1,6 @@
 #staff_shift_table {
   input.editable-input {
-    width: 40px;
+    width: 50px;
     margin-top: 10px;
   }
   button{
@@ -8,8 +8,9 @@
     margin-bottom: 0px;
   }
   button:nth-child(1){
+    left: 2px;
     top: -3px;
-    padding: 5px 15px;
+    padding: 5px 16px;
   }
   button:nth-child(2){
     padding: 5px 10px;
