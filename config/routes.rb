@@ -7,9 +7,7 @@ Rails.application.routes.draw do
   get '/facility' => 'facilities#facility'
   get '/facilities' => 'facilities#index'
   get '/units/:unitId' => 'units#show'
-
-
-
+  get '/stats' => 'static_pages#stats'
 
   get '/templates/:path.html' => 'templates#template', :constraints => { :path => /.+/  }
   # get "*path" => "templates#index"

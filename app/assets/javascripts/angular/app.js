@@ -92,6 +92,22 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
           return 'sessionCtrl'
         }
       }
+    }).state('stats', {
+      url: "/stats",
+      templateUrl: function() {
+        if (Parse.User.current()) {
+          return 'templates/stats.html'
+        } else {
+          return 'templates/session.html'
+        }
+      },
+      controllerProvider: function() {
+        if (Parse.User.current()) {
+          return 'statsCtrl'
+        } else {
+          return 'sessionCtrl'
+        }
+      }
     })
 })
 
