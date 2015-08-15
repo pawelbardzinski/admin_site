@@ -35,6 +35,7 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
         _.each($scope.staffShifts, function(staffShift) {
           $scope.editStaffShifts.shift[staffShift.id] = staffShift.get('index')
         })
+        $scope.editStaffShifts.staffShifts = angular.copy($scope.staffShifts)
         $scope.$apply();
       })
     }
