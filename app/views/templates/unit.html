@@ -37,7 +37,7 @@
         <select2 style="width: 100%;" ng-model="editStaffShifts.selectedDay" s2-options="dayOfTheWeeks.indexOf(dayOfTheWeek) as dayOfTheWeek for dayOfTheWeek in dayOfTheWeeks"></select2>
       </div>
       <div class="medium-6 columns">
-        <select2 style="width: 100%;" ng-model="editStaffShifts.selectedTime" s2-options="shiftTimes.indexOf(shiftTime) as dateParse(shiftTime.toString()) for shiftTime in shiftTimes"></select2>
+        <select2 style="width: 100%;" ng-model="editStaffShifts.selectedTime" s2-options="shiftTimes.indexOf(shiftTime) as shiftTimeParser(shiftTime) for shiftTime in shiftTimes"></select2>
       </div>
     </div>
   </div>

@@ -118,5 +118,9 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
     })
   }
 
+  $scope.shiftTimeParser = function(shiftTime){
+    return $filter('timestampToHHMMFilter')([shiftTime]).join()
+  }
+
   $scope.getUnit();
 }]);
