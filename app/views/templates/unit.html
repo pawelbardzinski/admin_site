@@ -45,20 +45,21 @@
     <table id="staff_shift_table">
       <thead>
         <th>Title</th>
-        <th bn-range="i in 0...9">
+        <th bn-range="i in 0...35">
           {{ i }}
         </th>
       </thead>
       <tbody>
         <tr ng-repeat="staffShift in editStaffShifts.staffShifts | staffShiftFilter:editStaffShifts.selectedDay:editStaffShifts.selectedTime">
           <td>{{staffShift.get('title')}}</td>
-          <td ng-repeat="grid in staffShift.get('grids')[editStaffShifts.selectedTime] | limitTo:10 track by $index ">
+          <td style='padding: 0'ng-repeat="grid in staffShift.get('grids')[editStaffShifts.selectedTime] track by $index ">
             <input type="number" ng-model="editStaffShifts.staffShifts[$parent.$index].get('grids')[editStaffShifts.selectedTime][$index]"></input>
-            <!-- <a href="#" editable-number="grid" onbeforesave="updateGrid($data, staffShift, editStaffShifts.selectedTime, $index)">{{grid}}</a> -->
           </td>
         </tr>
       </tbody>
     </table>
+
+    <button ng-click="updateGrid()">Update Grid</button>
 
     <div>
 
