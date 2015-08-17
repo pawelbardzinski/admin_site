@@ -135,3 +135,11 @@ i.fa.fa-times {
 .unit-info {
   height: 100%;
 }
+.inline-list{
+  display: inline;
+}
+.active{
+  font-size: 20px;
+  color: #0078a0;
+  font-weight: bold;
+}
