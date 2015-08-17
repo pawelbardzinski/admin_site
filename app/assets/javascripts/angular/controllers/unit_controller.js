@@ -153,11 +153,11 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
     Parse.Object.saveAll(staffShiftsToUpdate).then(function(staffShift) {
       FlashMessage.show("Grid has been updated.", true)
       $scope.editStaffShifts.disabled = false;
-      $scope.$apply();
+      // $scope.$apply();
     }, function(error) {
       FlashMessage.show(error.message, false)
       $scope.editStaffShifts.disabled = false;
-      $scope.$apply();
+      // $scope.$apply();
     })
   }
 
