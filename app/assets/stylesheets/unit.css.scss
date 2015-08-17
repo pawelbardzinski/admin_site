@@ -1,24 +1,3 @@
-#staff_shift_table {
-  input.editable-input {
-    width: 50px;
-    margin-top: 10px;
-  }
-  button{
-    top: -7px;
-    margin-bottom: 0px;
-  }
-  button:nth-child(1){
-    left: 2px;
-    top: -3px;
-    padding: 5px 16px;
-  }
-  button:nth-child(2){
-    padding: 5px 10px;
-    top: 32px;
-    left: -69px;
-  }
-  .editable-buttons{
-    height: 60px;
-    width: 67px;
-  }
+table#staff_shift_table tbody tr.ng-scope td input{
+  padding: 0px 5px;
 }

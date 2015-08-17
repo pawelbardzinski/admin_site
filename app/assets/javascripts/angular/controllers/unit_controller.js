@@ -105,22 +105,19 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
   }
 
   $scope.updateGrid = function() {
-    debugger
-    // value = parseInt(data)
-    // if (isNaN(value)) {
-    //   return "It's not a number";
-    // }
-    // staffShift.get('grids')[timeIndex][index] = value
-    // staffShift.save().then(function(staffShift) {
-    //   FlashMessage.show("Grid has been updated.", true)
-    //   $scope.$apply();
-    // }, function(error) {
-    //   FlashMessage.show(error.message, false)
-    //   $scope.$apply();
-    // })
+    $scope.editStaffShifts.disabled = true;
+    staffShiftsToUpdate = $filter('staffShiftFilter')($scope.editStaffShifts.staffShifts,
+      $scope.editStaffShifts.selectedDay, $scope.editStaffShifts.selectedTime)
+    Parse.Object.saveAll(staffShiftsToUpdate).then(function(staffShift) {
+      FlashMessage.show("Grid has been updated.", true)
+      $scope.editStaffShifts.disabled = false;
+    }, function(error) {
+      FlashMessage.show(error.message, false)
+      $scope.editStaffShifts.disabled = false;
+    })
   }
 
-  $scope.shiftTimeParser = function(shiftTime){
+  $scope.shiftTimeParser = function(shiftTime) {
     return $filter('timestampToHHMMFilter')([shiftTime]).join()
   }
 
