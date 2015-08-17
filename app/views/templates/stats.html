@@ -1,3 +1,12 @@
-<h2>
-Total users:{{users.length}}
-</h2>
+<div ng-show="isAdmin()">
+  <h2>
+    Total users:{{users.length}}
+  </h2>
+  <h2>
+    Total admins: {{adminCount}}
+  </h2>
+
+  <h2>
+    Total facilities: {{facilities.length}}
+  </h2>
+</div>
