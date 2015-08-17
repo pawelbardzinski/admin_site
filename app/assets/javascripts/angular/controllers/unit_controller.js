@@ -11,11 +11,11 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
   $scope.editStaffShifts = {
     selectedDay: 0,
     selectedTime: 1,
-    shift: {},
+    staffShifts: {},
     bigTotalItems: 10,
     currentPage: 0,
     currentLimit: 10
-  }
+    }
 
   findActualStaffShifts = function() {
     return $filter('staffShiftFilter')($scope.editStaffShifts.staffShifts,
@@ -75,9 +75,8 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
       }, function(error) {}).then(function(staffShifts) {
         $scope.staffShifts = staffShifts
         _.each($scope.staffShifts, function(staffShift) {
-          $scope.editStaffShifts.shift[staffShift.id] = staffShift.get('index')
+          $scope.editStaffShifts.staffShifts[staffShift.id] = angular.copy(staffShift)
         })
-        $scope.editStaffShifts.staffShifts = angular.copy($scope.staffShifts)
         $scope.countRange()
         $scope.$apply();
       })
@@ -153,11 +152,11 @@ angular.module('app').controller('unitCtrl', ['$scope', '$filter', '$stateParams
     Parse.Object.saveAll(staffShiftsToUpdate).then(function(staffShift) {
       FlashMessage.show("Grid has been updated.", true)
       $scope.editStaffShifts.disabled = false;
-      // $scope.$apply();
+      $scope.$apply();
     }, function(error) {
       FlashMessage.show(error.message, false)
       $scope.editStaffShifts.disabled = false;
-      // $scope.$apply();
+      $scope.$apply();
     })
   }
 

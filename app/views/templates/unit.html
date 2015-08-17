@@ -51,14 +51,14 @@
       <thead>
         <th>Title</th>
         <th bn-range="i in 1...10 |limitTo:editStaffShifts.currentLimit">
-          {{ i }}
+          {{ i + 10 * editStaffShifts.currentPage }}
         </th>
       </thead>
       <tbody>
         <tr ng-repeat="staffShift in editStaffShifts.staffShifts | staffShiftFilter:editStaffShifts.selectedDay:editStaffShifts.selectedTime">
           <td>{{staffShift.get('title')}}</td>
           <td style='padding: 0' ng-repeat="grid in splitStaffShifts(staffShift.get('grids')[editStaffShifts.selectedTime]) track by $index ">
-            <input type="number" ng-model="editStaffShifts.staffShifts[$parent.$index].get('grids')[editStaffShifts.selectedTime][$index + 10 * editStaffShifts.currentPage]"></input>
+            <input type="number" ng-model="editStaffShifts.staffShifts[staffShift.id].get('grids')[editStaffShifts.selectedTime][$index + 10 * editStaffShifts.currentPage]"></input>
           </td>
         </tr>
       </tbody>
