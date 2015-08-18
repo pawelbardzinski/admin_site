@@ -17,7 +17,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 
 gem 'angularjs-rails-resource', '~> 2.0.0'
-gem "select2-rails"
+gem 'select2-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
@@ -30,9 +30,6 @@ gem 'angular-ui-bootstrap-rails'
 gem 'foundation-rails'
 gem 'underscore-rails'
 gem 'angularjs-rails'
-
-gem 'capistrano', '~> 2.15.5'
-gem 'rvm-capistrano', require: false
 # Use Unicorn as the app server
 # gem 'unicorn'
 
@@ -57,4 +54,12 @@ group :development, :test do
   gem 'pry-doc'
   gem 'jasmine'
   gem 'jasmine-rails', '~> 0.10.8'
+end
+
+group :development do
+  gem 'capistrano', '~> 3.4.0'
+  gem 'capistrano-bundler', '~> 1.1.2'
+  gem 'capistrano-rvm'
+  gem 'capistrano-rails', '~> 1.1.3'
+  gem 'capistrano-passenger'
 end

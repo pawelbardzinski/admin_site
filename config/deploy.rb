@@ -1,35 +1,44 @@
-require "rvm/capistrano"
-require "bundler/capistrano"
-
-namespace :deploy do
+# config valid only for current version of Capistrano
+lock '3.4.0'
 
 set :application, 'Stafficiency.co'
-set :repository, 'git@git.assembla.com:staffing-widget.web.git'
+set :repo_url, 'git@git.assembla.com:staffing-widget.web.git'
+
+SSHKit.config.command_map[:rake]  = "bundle exec rake"
+SSHKit.config.command_map[:rails] = "bundle exec rails"
+
+
 set :deploy_to, '/srv/www'
-set :scm, :git
-set :branch, 'develop'
 set :user, 'lelanderadmin'
 set :scm_passphrase, 'DyagCnytazywt22'
 set :use_sudo, false
-set :rails_env, 'development'
 set :deploy_via, 'copy'
 set :keep_releases, 5
 set :rvm_type, :system
-=begin
-set :default_environment, {
-      'PATH' => "/usr/local/rvm/rubies/ruby-2.2.1/bin/:$PATH"
-    }
-=end
 
-default_run_options[:pty] = true
+# Default value for :linked_files is []
+set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml', 'config/application.yml')
 
-# 52.24.114.168 for Development
-server 'stafficiency.co', :app, :web, :db, :primary => true
+# Default value for linked_dirs is []
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
 
+# Default value for default_env is {}
+# set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
-    desc "restart web server"
-    task :http_restart do
-        run 'service nginx restart'
+# Default value for keep_releases is 5
+# set :keep_releases, 5
+
+namespace :deploy do
+
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      # Here we can do anything such as:
+      # within release_path do
+      #   execute :rake, 'cache:clear'
+      # end
     end
+  end
 
 end
+
+server 'stafficiency.co', :app, :web, :db, :primary => true
