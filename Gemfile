@@ -30,6 +30,9 @@ gem 'angular-ui-bootstrap-rails'
 gem 'foundation-rails'
 gem 'underscore-rails'
 gem 'angularjs-rails'
+
+gem 'capistrano', '~> 2.15.5'
+gem 'rvm-capistrano', require: false
 # Use Unicorn as the app server
 # gem 'unicorn'
 
