@@ -4,7 +4,7 @@ angular.module('app').controller('sessionCtrl', ['$scope', '$state', 'FlashMessa
   $scope.passwordFormVisible = false;
 
 
-  $scope.afterSuccessSignIn = function(username){
+  $scope.afterSuccessSignIn = function(username) {
     $scope.disabledButton = false;
     FlashMessage.show("You have been signed in as " + username, true)
   }
@@ -15,11 +15,17 @@ angular.module('app').controller('sessionCtrl', ['$scope', '$state', 'FlashMessa
     $scope.disabledButton = true;
     Parse.User.logIn($scope.user.username, $scope.user.password, {
       success: function(user) {
-        $scope.user.currentUser = Parse.User.current();
-        $scope.user.roleInfo = Parse.User.current() && Parse.User.current().get("roleInfo");
-        $scope.$emit('userChanged');
-        $state.forceReload();
-        $scope.afterSuccessSignIn($scope.user.currentUser.get('username'));
+        if (!Parse.User.current().get('emailVerified') && Parse.User.current().get('email')) {
+          $scope.disabledButton = false;
+          Parse.User.logOut();
+          FlashMessage.show("You must verify your email address to sign in", false)
+        } else {
+          $scope.user.currentUser = Parse.User.current();
+          $scope.user.roleInfo = Parse.User.current() && Parse.User.current().get("roleInfo");
+          $scope.$emit('userChanged');
+          $state.forceReload();
+          $scope.afterSuccessSignIn($scope.user.currentUser.get('username'));
+        }
         $scope.$apply();
       },
       error: function(user, error) {

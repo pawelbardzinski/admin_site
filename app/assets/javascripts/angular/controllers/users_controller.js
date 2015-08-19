@@ -141,6 +141,7 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', 'Fl
         password: $scope.newUser.password,
         facilityId: $scope.facility.id,
         roleName: $scope.newUser.role,
+        email: $scope.newUser.username, // probably will be changed somewhen
         assignedUnits: []
       }).then(function(user) {
         FlashMessage.show("User " + user.get('username') + " has been created", true)

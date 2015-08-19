@@ -1,0 +1,27 @@
+Parse.Cloud.define("createUser", function(request, response) {
+    var username = request.params.username;
+    var password = request.params.password;
+    var facilityId = request.params.facilityId;
+    var roleName = request.params.roleName;
+    var assignedUnits = request.params.assignedUnits;
+    var email = request.params.username; //added
+
+    var facility = new Facility();
+    facility.id = facilityId;
+
+    authenticate(["editFacility"]).then(function() {
+        var user = new Parse.User();
+        user.set("username", username);
+        user.set("password", password);
+        user.set("facility", facility);
+        user.set("email", email); //added
+
+        return user.save();
+    }).then(function(user) {
+        return updateUserRole(user, roleName, assignedUnits);
+    }).done(function(user) {
+        response.success(user);
+    }).fail(function(error) {
+        response.error(error);
+    });
+});
