@@ -48,13 +48,7 @@
           <td class="no-bottom-margin min-width" ng-show="{{canEditFacility()}}">
             <button ng-confirm-click="Are you sure you want to delete '{{user.get('username')}}' user?" ng-click="destroyUser(user)" class="alert small-button">Delete User</button>
             <button ng-hide="user.inputForPasswordIsShow" ng-click="showInputForPassword(user)" class="info small-button">Update password</button>
-            <form ng-show="user.inputForPasswordIsShow" ng-submit="updatePassword(user)" name="password_form" novalidate>
-              <input type="text" ng-hide="editUser.isHidePassword[user.id]" ng-model="editUser.password[user.id]" required class="form-control inline"></input>
-              <input type="password" ng-show="editUser.isHidePassword[user.id]" ng-model="editUser.password[user.id]" required class="form-control inline"></input>
-              <i tooltip-placement="right" tooltip="Click to show or hide password" ng-click="togglePassword(user.id)" class="fa fa-edit icon"></i>
-              <i ng-click="hidePasswordCancel(user)" class="fa fa-times vertical-center"></i>
-              <button ng-show="user.inputForPasswordIsShow" class="success small-button with-icon">Click to update password</button>
-            </form>
+            <button ng-click="resetPassword(user)" class="success small-button with-icon">Click to update password</button>
             <button ng-hide="user.inputForRoleIsShow" ng-click="showInputForRole(user)" class="info small-button">{{user.roleName ? "Update role" : "Add role"}}</button>
             <form ng-show="user.inputForRoleIsShow" ng-submit="updateRole(user)" name="role_form">
               <select2 style="width: 100%;" ng-model="editUser.role[user.id]" s2-options="role.get('info').get('name') as role.get('info').get('name') for role in roles"></select2>
