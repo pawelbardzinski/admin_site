@@ -1,6 +1,6 @@
 angular.module('app').controller('ApplicationCtrl', ['$scope', '$state', 'FlashMessage', function($scope, $state, FlashMessage) {
 
-  Parse.initialize("jjQlIo5A3HWAMRMCkH8SnOfimVfCi6QlOV9ZNO2T", "EK0eXjOx2Ugs26mIUgCzQOMoLBlYbc5Lba9Q6Zba");
+  Parse.initialize(window.appId, window.javascriptKey);
 
   var adminRoleName = "Admin";
 

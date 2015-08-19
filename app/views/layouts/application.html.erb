@@ -5,7 +5,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Stafficiency</title>
-
+  <script>
+    window.appId = "<%= ENV['PARSE_APP_ID']%>";
+    window.javascriptKey = "<%= ENV['PARSE_JAVASCRIPT_KEY']%>";
+  </script>
   <%= stylesheet_link_tag "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
