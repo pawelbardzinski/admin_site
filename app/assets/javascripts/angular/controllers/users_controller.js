@@ -164,6 +164,12 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', 'Fl
   $scope.hidePasswordCancel = function(user) {
     user.inputForPasswordIsShow = false;
   }
+
+  $scope.resetPassword(email) {
+    Parse.User.requestPasswordReset(email)
+  }
+
+
   checkIfInvalidEmail = function(email) {
     validEmailFormat = /^[^@\s]+@[^@\s]+\.[^@\s]+$/
     return email.match(validEmailFormat) ? false : true

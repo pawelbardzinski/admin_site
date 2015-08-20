@@ -47,8 +47,7 @@
           <td>{{user.updatedAt | date:'yyyy-MM-dd HH:mm:ss Z'}}</td>
           <td class="no-bottom-margin min-width" ng-show="{{canEditFacility()}}">
             <button ng-confirm-click="Are you sure you want to delete '{{user.get('username')}}' user?" ng-click="destroyUser(user)" class="alert small-button">Delete User</button>
-            <button ng-hide="user.inputForPasswordIsShow" ng-click="showInputForPassword(user)" class="info small-button">Update password</button>
-            <button ng-click="resetPassword(user)" class="success small-button with-icon">Click to update password</button>
+            <button ng-click="resetPassword(user.get('username'))" class="success small-button">Click to update password</button>
             <button ng-hide="user.inputForRoleIsShow" ng-click="showInputForRole(user)" class="info small-button">{{user.roleName ? "Update role" : "Add role"}}</button>
             <form ng-show="user.inputForRoleIsShow" ng-submit="updateRole(user)" name="role_form">
               <select2 style="width: 100%;" ng-model="editUser.role[user.id]" s2-options="role.get('info').get('name') as role.get('info').get('name') for role in roles"></select2>
