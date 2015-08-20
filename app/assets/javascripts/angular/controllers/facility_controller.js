@@ -5,12 +5,26 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', 'FlashMes
   $scope.newUnit = {
     varianceReasons: ["Pending Admissions", "Pending Discharges", "1:1 Suicide Precautions", "1:1 Fall Risk", "Acuity High/Low - Specify", "Staffing Need Not Met - Specify", "Other"],
     maxCensus: 35,
-    rolesToSet: ['Chief Nursing Officer', 'House Supervisor', 'Staffing Coordinator']
+    rolesToSet: ['Chief Nursing Officer', 'House Supervisor', 'Staffing Coordinator'],
+    staffShiftsToSet: ['SEC', 'Charge', 'Nurse', 'NA'],
+    shiftTimes: [25200, 54000, 68400, 82800],
   }
   $scope.edit = {
     toggle: []
   }
   $scope.facility = null;
+
+  var defaultGrid = function() {
+    var grids = []
+    _(4).times(function(n) {
+      var grid = []
+      _(35).times(function(n) {
+        grid.push(0)
+      })
+      grids.push(grid)
+    })
+    return grids
+  }
 
   $scope.getFacility = function() {
     var Facility = Parse.Object.extend("Facility");
@@ -96,6 +110,7 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', 'FlashMes
     unit.set("varianceReasons", $scope.newUnit.varianceReasons)
     unit.set("maxCensus", $scope.newUnit.maxCensus)
     unit.set("facility", $scope.facility)
+    unit.set("shiftTimes", $scope.newUnit.shiftTimes)
 
     var newACL = new Parse.ACL();
     _.each(rolesToUpdate, function(value) {
@@ -108,11 +123,34 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', 'FlashMes
       success: function(unit) {
         $scope.newUnit.name = ""
         $scope.units.push(unit);
-        FlashMessage.show("Unit has been created.", true)
-        $scope.$apply();
+        $scope.staffShiftsToSave = []
+        var StaffShift = Parse.Object.extend("StaffShift");
+        _.each($scope.newUnit.staffShiftsToSet, function(title, key) {
+          _(7).times(function(indexOfTheDay) {
+            var staffShift = new StaffShift();
+            staffShift.set("required", true);
+            staffShift.set("dayOfTheWeek", indexOfTheDay);
+            staffShift.set("title", title);
+            staffShift.set("unit", unit);
+            staffShift.set("grids", defaultGrid())
+            staffShift.set("index", key + 1)
+            $scope.staffShiftsToSave.push(staffShift);
+          })
+        })
+        return Parse.Object.saveAll($scope.staffShiftsToSave, function(staffShifts) {
+          var unit = staffShifts[0].get('unit')
+          var relationship = unit.relation("staffShifts")
+          relationship.add(staffShifts);
+          unit.save(null, {
+            success: function() {
+              FlashMessage.show("Unit has been created.", true)
+              $scope.$apply();
+            }
+          })
+        });
       },
       error: function(unit) {}
-    });
+    })
   }
 
 

@@ -41,4 +41,4 @@ namespace :deploy do
 
 end
 
-server 'stafficiency.co', :app, :web, :db, :primary => true
+server 'stafficiency.co', roles: [:app, :web, :db], :primary => true
