@@ -123,26 +123,34 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', 'FlashMes
       success: function(unit) {
         $scope.newUnit.name = ""
         $scope.units.push(unit);
-        var staffShiftsToSave = []
+        $scope.staffShiftsToSave = []
         var StaffShift = Parse.Object.extend("StaffShift");
-        _($scope.newUnit.staffShiftsToSet.length).times(function(title) {
+        _.each($scope.newUnit.staffShiftsToSet, function(title, key) {
           _(7).times(function(indexOfTheDay) {
             var staffShift = new StaffShift();
             staffShift.set("required", true);
             staffShift.set("dayOfTheWeek", indexOfTheDay);
             staffShift.set("title", title);
             staffShift.set("unit", unit);
-            staffShift.set("grid", defaultGrid)
-            staffShiftsToSave.push(staffShift);
+            staffShift.set("grids", defaultGrid())
+            staffShift.set("index", key + 1)
+            $scope.staffShiftsToSave.push(staffShift);
           })
         })
-        return Parse.Object.saveAll(staffShiftsToSave);
+        return Parse.Object.saveAll($scope.staffShiftsToSave, function(staffShifts) {
+          var unit = staffShifts[0].get('unit')
+          var relationship = unit.relation("staffShifts")
+          relationship.add(staffShifts);
+          unit.save(null, {
+            success: function() {
+              FlashMessage.show("Unit has been created.", true)
+              $scope.$apply();
+            }
+          })
+        });
       },
       error: function(unit) {}
-    }).then(function(newUnits) {
-      FlashMessage.show("Unit has been created.", true)
-      $scope.$apply();
-    });
+    })
   }
 
 
