@@ -165,8 +165,11 @@ angular.module('app').controller('usersCtrl', ['$scope', '$filter', '$http', 'Fl
     user.inputForPasswordIsShow = false;
   }
 
-  $scope.resetPassword(email) {
-    Parse.User.requestPasswordReset(email)
+  $scope.resetPassword = function(email) {
+    Parse.User.requestPasswordReset(email).then(function(callback){
+      FlashMessage.show("Email with password reset has been sent", true)
+      $scope.$apply();
+    })
   }
 
 
