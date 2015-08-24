@@ -1,91 +1,95 @@
 <div ng-include src="'templates/shared/notifications.html'"></div>
 <div class="row full-width margin-top">
-  <div>
-    <input type="text" ng-model="newUnit.name" class="form-control"></input>
-    <button type="submit" class="small-button small-top-margin small-left-margin" ng-click="createUnit()">
+  <form ng-submit="createUnit(this)" name="newUnitForm">
+    <input type="text" name='name' ng-model="newUnit.name" class="form-control" ng-minlength="3" required></input>
+    <div ng-messages="newUnitForm.name.$error" ng-if='newUnitForm.name.$dirty'>
+      <small class="error" ng-message="minlength">Unit name is too short.</small>
+      <small class="error" ng-message="required">Unit name is required.</small>
+    </div>
+    <button ng-disabled="newUnitForm.$invalid" class="small-button small-top-margin small-left-margin" >
       Create new Unit
     </button>
+</div>
+<div ng-show="canEditFacility() && facilityFetched == true">
+  <h1>Name: {{facility.attributes.name}}</h1>
+  <div class="medium-4 columns">
+    <h5>
+      <text class="coloured">Id:</text> {{facility.id}}
+    </h5>
+    <h5>
+      <i tooltip-placement="top" tooltip="Click to edit or show Notifications value" ng-click="toggleData('notifications')" class="fa fa-edit"></i>
+      <text class="coloured">Notifications:</text>
+      {{facility.attributes.notifications}}
+      <div ng-show="edit.toggle['notifications']">
+        <input ng-model="editFacility.notifications" type="radio" data-ng-value="true" id="notificationsTrue">
+        <label for="notificationsTrue">True</label>
+        <input ng-model="editFacility.notifications" type="radio" data-ng-value="false" id="notificationsFalse">
+        <label for="notificationsFalse">False</label>
+        <button type="submit" class="small-button small-top-margin small-left-margin" ng-click="updateFacility('notifications')">
+          Update Notifications
+        </button>
+      </div>
+    </h5>
+    <h5>
+      <i tooltip-placement="top" tooltip="Click to edit or show Negative Notification Threshold value" ng-click="toggleData('negativeNotificationThreshold')" class="fa fa-edit"></i>
+      <text class="coloured">Negative Notification Threshold:</text> {{facility.attributes.negativeNotificationThreshold}}
+      <div ng-show="edit.toggle['negativeNotificationThreshold']">
+        <input type="number" ng-model="editFacility.negativeNotificationThreshold" class="form-control"></input>
+        <button type="submit" class="small-button small-top-margin small-left-margin" ng-click="updateFacility('negativeNotificationThreshold')">
+          Update Negative Notification Threshold
+        </button>
+      </div>
+    </h5>
+    <h5>
+      <i tooltip-placement="top" tooltip="Click to edit or show Positive Notification Threshold value" ng-click="toggleData('positiveNotificationThreshold')" class="fa fa-edit"></i>
+      <text class="coloured">Positive Notification Threshold:</text> {{facility.attributes.positiveNotificationThreshold}}
+      <div ng-show="edit.toggle['positiveNotificationThreshold']">
+        <input type="number" ng-model="editFacility.positiveNotificationThreshold" class="form-control"></input>
+        <button type="submit" class="small-button small-top-margin small-left-margin" ng-click="updateFacility('positiveNotificationThreshold')">
+          Update Positive Notification Threshold
+        </button>
+      </div>
+    </h5>
+    <h5>
+      <text class="coloured">Created At:</text> {{facility.createdAt | date:'yyyy-MM-dd HH:mm:ss Z'}}
+    </h5>
+    <h5>
+      <i tooltip-placement="top" tooltip="Click to edit or show Variance Reasons" ng-click="toggleData('varianceReasons')" class="fa fa-edit"></i>
+      <text class="coloured">Variance Reasons:</text>
+      <div ng-show="edit.toggle['varianceReasons']">
+        <textarea class="small-top-margin" msd-elastic ng-model="editFacility.varianceReasons" ng-list="&#10;" ng-trim="false"></textarea>
+        <button type="submit" class="small-button small-top-margin small-left-margin" ng-click="updateFacility('varianceReasons')">
+          Update Variance Reasons
+        </button>
+      </div>
+      <ul ng-hide="edit.toggle['varianceReasons']" class="listing">
+        <li ng-repeat="varianceReason in facility.attributes.varianceReasons">
+          {{varianceReason}}
+        </li>
+      </ul>
+    </h5>
   </div>
-  <div ng-show="canEditFacility() && facilityFetched == true">
-    <h1>Name: {{facility.attributes.name}}</h1>
-    <div class="medium-4 columns">
-      <h5>
-        <text class="coloured">Id:</text> {{facility.id}}
-      </h5>
-      <h5>
-        <i tooltip-placement="top" tooltip="Click to edit or show Notifications value" ng-click="toggleData('notifications')" class="fa fa-edit"></i>
-        <text class="coloured">Notifications:</text>
-        {{facility.attributes.notifications}}
-        <div ng-show="edit.toggle['notifications']">
-          <input ng-model="editFacility.notifications" type="radio" data-ng-value="true" id="notificationsTrue">
-          <label for="notificationsTrue">True</label>
-          <input ng-model="editFacility.notifications" type="radio" data-ng-value="false" id="notificationsFalse">
-          <label for="notificationsFalse">False</label>
-          <button type="submit" class="small-button small-top-margin small-left-margin" ng-click="updateFacility('notifications')">
-            Update Notifications
+  <div class="medium-8 columns">
+    <h5>
+      <text class="coloured">Units:</text>
+      <ul class="listing">
+        <li class="no-list-style margin-bottom-top big-margin-left" ng-repeat="unit in units">
+          <a href="#" editable-text="unit.attributes.name" onbeforesave="updateUnit($data, unit.id, unit.get('name'))">{{unit.get('name')}}</a>
+          <button ng-confirm-click="Are you sure you want to delete '{{unit.get('name')}}' unit?" type="submit" class="small-button alert right no-bottom-margin small-left-margin" ng-click="destroyUnit(unit.id)">
+            Delete Unit
           </button>
-        </div>
-      </h5>
-      <h5>
-        <i tooltip-placement="top" tooltip="Click to edit or show Negative Notification Threshold value" ng-click="toggleData('negativeNotificationThreshold')" class="fa fa-edit"></i>
-        <text class="coloured">Negative Notification Threshold:</text> {{facility.attributes.negativeNotificationThreshold}}
-        <div ng-show="edit.toggle['negativeNotificationThreshold']">
-          <input type="number" ng-model="editFacility.negativeNotificationThreshold" class="form-control"></input>
-          <button type="submit" class="small-button small-top-margin small-left-margin" ng-click="updateFacility('negativeNotificationThreshold')">
-            Update Negative Notification Threshold
+          <button ui-sref="units({unitId: unit.id})" class="small-button right no-bottom-margin">
+            Show Unit
           </button>
-        </div>
-      </h5>
-      <h5>
-        <i tooltip-placement="top" tooltip="Click to edit or show Positive Notification Threshold value" ng-click="toggleData('positiveNotificationThreshold')" class="fa fa-edit"></i>
-        <text class="coloured">Positive Notification Threshold:</text> {{facility.attributes.positiveNotificationThreshold}}
-        <div ng-show="edit.toggle['positiveNotificationThreshold']">
-          <input type="number" ng-model="editFacility.positiveNotificationThreshold" class="form-control"></input>
-          <button type="submit" class="small-button small-top-margin small-left-margin" ng-click="updateFacility('positiveNotificationThreshold')">
-            Update Positive Notification Threshold
-          </button>
-        </div>
-      </h5>
-      <h5>
-        <text class="coloured">Created At:</text> {{facility.createdAt | date:'yyyy-MM-dd HH:mm:ss Z'}}
-      </h5>
-      <h5>
-        <i tooltip-placement="top" tooltip="Click to edit or show Variance Reasons" ng-click="toggleData('varianceReasons')" class="fa fa-edit"></i>
-        <text class="coloured">Variance Reasons:</text>
-        <div ng-show="edit.toggle['varianceReasons']">
-          <textarea class="small-top-margin" msd-elastic ng-model="editFacility.varianceReasons" ng-list="&#10;" ng-trim="false"></textarea>
-          <button type="submit" class="small-button small-top-margin small-left-margin" ng-click="updateFacility('varianceReasons')">
-            Update Variance Reasons
-          </button>
-        </div>
-        <ul ng-hide="edit.toggle['varianceReasons']" class="listing">
-          <li ng-repeat="varianceReason in facility.attributes.varianceReasons">
-            {{varianceReason}}
-          </li>
-        </ul>
-      </h5>
-    </div>
-    <div class="medium-8 columns">
-      <h5>
-        <text class="coloured">Units:</text>
-        <ul class="listing">
-          <li class="no-list-style margin-bottom-top big-margin-left" ng-repeat="unit in units">
-            <a href="#" editable-text="unit.attributes.name" onbeforesave="updateUnit($data, unit.id, unit.get('name'))">{{unit.get('name')}}</a>
-            <button ng-confirm-click="Are you sure you want to delete '{{unit.get('name')}}' unit?" type="submit" class="small-button alert right no-bottom-margin small-left-margin" ng-click="destroyUnit(unit.id)">
-              Delete Unit
-            </button>
-            <button ui-sref="units({unitId: unit.id})" class="small-button right no-bottom-margin">
-              Show Unit
-            </button>
-          </li>
-        </ul>
-      </h5>
-    </div>
+        </li>
+      </ul>
+    </h5>
   </div>
-  <div ng-hide="facilityFetched">
-    Fetching...
-  </div>
-  <div ng-show="facilitiyFetched == 'error'">
-    There was a problem fetching data, please refresh the page.
-  </div>
+</div>
+<div ng-hide="facilityFetched">
+  Fetching...
+</div>
+<div ng-show="facilitiyFetched == 'error'">
+  There was a problem fetching data, please refresh the page.
+</div>
 </div>

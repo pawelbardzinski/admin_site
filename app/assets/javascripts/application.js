@@ -17,6 +17,7 @@
 //= require angularjs/rails/resource
 //= require_tree ./angular
 //= require angular-resource
+//= require angular-messages
 //= require angular-ui-bootstrap
 //= require angular-ui-bootstrap-tpls
 //= require foundation

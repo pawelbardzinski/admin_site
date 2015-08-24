@@ -82,7 +82,7 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', 'FlashMes
     }
   }
 
-  $scope.createUnit = function() {
+  $scope.createUnit = function(thiz) {
       var info = {
           name: $scope.newUnit.name,
           facility: $scope.facility.id,
@@ -100,12 +100,14 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', 'FlashMes
           success: function(unit) {
               $scope.newUnit.name = "";
               $scope.units.push(unit);
+              thiz.newUnitForm.name.$dirty = false;
 
               FlashMessage.show("Unit has been created.", true);
               $scope.$apply();
           },
           error: function(error) {
               console.log(error);
+              thiz.newUnitForm.$dirty = false;
               FlashMessage.show("Unable to create unit!", false);
           }
       });

@@ -1,5 +1,5 @@
 var app;
-app = angular.module('app', ['angularSpinner', 'ui.router', 'rails', 'monospaced.elastic', 'ui.bootstrap', 'rt.select2', "xeditable", 'angular.filter']);
+app = angular.module('app', ['angularSpinner', 'ui.router', 'rails', 'ngMessages', 'monospaced.elastic', 'ui.bootstrap', 'rt.select2', "xeditable", 'angular.filter']);
 app.config(["$httpProvider", function($httpProvider) {
   var authToken;
   authToken = $("meta[name=\"csrf-token\"]").attr("content");
@@ -123,4 +123,3 @@ app.config(['$provide', function($provide) {
     return $delegate;
   }]);
 }]);
-
