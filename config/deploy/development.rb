@@ -5,10 +5,12 @@
 # unless any hosts have the primary property set.
 # Don't declare `role :all`, it's a meta role
 
-role :web, %w{151.80.232.170}
-set :rails_env, 'production'
+server "52.26.186.2", :app, :web, :db, :primary => true
+set :deploy_to, '/srv/www'
+set :rails_env, 'development'
 set :branch, :develop
 set :passenger_restart_with_sudo, true # default
+
 # Extended Server Syntax
 # ======================
 # This can be used to drop a more detailed server

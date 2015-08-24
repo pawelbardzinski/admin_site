@@ -5,7 +5,7 @@ app.config(["$httpProvider", function($httpProvider) {
   authToken = $("meta[name=\"csrf-token\"]").attr("content");
 }]);
 
-app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', function($stateProvider, $urlRouterProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 
   $urlRouterProvider.otherwise("/");
@@ -109,10 +109,10 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
         }
       }
     })
-})
+}])
 
-app.config(function($provide) {
-  $provide.decorator('$state', function($delegate, $stateParams) {
+app.config(['$provide', function($provide) {
+ $provide.decorator('$state', ['$delegate', function($delegate, $stateParams) {
     $delegate.forceReload = function() {
       return $delegate.go($delegate.current, $stateParams, {
         reload: true,
@@ -121,5 +121,6 @@ app.config(function($provide) {
       });
     };
     return $delegate;
-  });
-});
+  }]);
+}]);
+

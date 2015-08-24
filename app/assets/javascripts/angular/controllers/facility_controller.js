@@ -3,28 +3,20 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', 'FlashMes
     notifications: true
   }
   $scope.newUnit = {
-    varianceReasons: ["Pending Admissions", "Pending Discharges", "1:1 Suicide Precautions", "1:1 Fall Risk", "Acuity High/Low - Specify", "Staffing Need Not Met - Specify", "Other"],
-    maxCensus: 35,
-    rolesToSet: ['Chief Nursing Officer', 'House Supervisor', 'Staffing Coordinator'],
-    staffShiftsToSet: ['SEC', 'Charge', 'Nurse', 'NA'],
-    shiftTimes: [25200, 54000, 68400, 82800],
-  }
+      name: ""
+  };
   $scope.edit = {
     toggle: []
   }
   $scope.facility = null;
 
-  var defaultGrid = function() {
-    var grids = []
-    _(4).times(function(n) {
-      var grid = []
-      _(35).times(function(n) {
-        grid.push(0)
-      })
-      grids.push(grid)
-    })
-    return grids
-  }
+  var defaultMaxCensus = 35;
+
+  var defaultGridTemplate = [];
+
+  _(defaultMaxCensus + 1).times(function(n) {
+      defaultGridTemplate.push(0);
+  });
 
   $scope.getFacility = function() {
     var Facility = Parse.Object.extend("Facility");
@@ -91,67 +83,33 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', 'FlashMes
   }
 
   $scope.createUnit = function() {
-    var rolesNames = $filter('filter')($scope.roles, function(object) {
-      var roleInfoName = object.get('info') && object.get('info').get("name")
-      if (roleInfoName) {
-        if ($scope.newUnit.rolesToSet.indexOf(roleInfoName) > -1) {
-          return object.get('name')
-        }
-      }
-    });
+      var info = {
+          name: $scope.newUnit.name,
+          facility: $scope.facility.id,
+          gridTemplate: defaultGridTemplate,
+          staffNames: ['SEC', 'Charge', 'Nurse', 'NA'],
+          shiftTimes: [25200, 54000, 68400, 82800],
+          varianceReasons: [
+              "Pending Admissions", "Pending Discharges", "1:1 Suicide Precautions", "1:1 Fall Risk",
+              "Acuity High/Low - Specify", "Staffing Need Not Met - Specify", "Other"
+          ],
+          floor: 1
+      };
 
-    var rolesToUpdate = _.map(rolesNames, function(object) {
-      return object.get('name')
-    });
-    rolesToUpdate.push("admin");
-    var Unit = Parse.Object.extend("Unit");
-    var unit = new Unit();
-    unit.set("name", $scope.newUnit.name)
-    unit.set("varianceReasons", $scope.newUnit.varianceReasons)
-    unit.set("maxCensus", $scope.newUnit.maxCensus)
-    unit.set("facility", $scope.facility)
-    unit.set("shiftTimes", $scope.newUnit.shiftTimes)
+      Parse.Cloud.run('createUnit', info, {
+          success: function(unit) {
+              $scope.newUnit.name = "";
+              $scope.units.push(unit);
 
-    var newACL = new Parse.ACL();
-    _.each(rolesToUpdate, function(value) {
-      newACL.setRoleWriteAccess(value, true);
-      newACL.setRoleReadAccess(value, true);
-    })
-    unit.setACL(newACL)
-
-    unit.save(null, {
-      success: function(unit) {
-        $scope.newUnit.name = ""
-        $scope.units.push(unit);
-        $scope.staffShiftsToSave = []
-        var StaffShift = Parse.Object.extend("StaffShift");
-        _.each($scope.newUnit.staffShiftsToSet, function(title, key) {
-          _(7).times(function(indexOfTheDay) {
-            var staffShift = new StaffShift();
-            staffShift.set("required", true);
-            staffShift.set("dayOfTheWeek", indexOfTheDay);
-            staffShift.set("title", title);
-            staffShift.set("unit", unit);
-            staffShift.set("grids", defaultGrid())
-            staffShift.set("index", key + 1)
-            $scope.staffShiftsToSave.push(staffShift);
-          })
-        })
-        return Parse.Object.saveAll($scope.staffShiftsToSave, function(staffShifts) {
-          var unit = staffShifts[0].get('unit')
-          var relationship = unit.relation("staffShifts")
-          relationship.add(staffShifts);
-          unit.save(null, {
-            success: function() {
-              FlashMessage.show("Unit has been created.", true)
+              FlashMessage.show("Unit has been created.", true);
               $scope.$apply();
-            }
-          })
-        });
-      },
-      error: function(unit) {}
-    })
-  }
+          },
+          error: function(error) {
+              console.log(error);
+              FlashMessage.show("Unable to create unit!", false);
+          }
+      });
+  };
 
 
   $scope.updateUnit = function(data, id, unitName) {

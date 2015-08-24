@@ -1,5 +1,5 @@
 app.directive(
-          "bnRange",
+          "bnRange", ['$compile',
           function( $compile ) {
               // The range pattern allows for two number separated by 2 or 3 dots. Two
               // dot (ex, 1..10) indicates exclusive end while three dots (ex, 1...10)
@@ -99,4 +99,5 @@ app.directive(
                   return( cachedSets[ range ] = angular.toJson( set ) );
               }
           }
-      );
+      ]);
+
