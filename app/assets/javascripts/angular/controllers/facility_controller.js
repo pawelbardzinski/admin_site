@@ -91,18 +91,23 @@ angular.module('app').controller('facilityCtrl', ['$scope', '$filter', 'FlashMes
   }
 
   $scope.createUnit = function() {
-    var rolesNames = $filter('filter')($scope.roles, function(object) {
-      var roleInfoName = object.get('info') && object.get('info').get("name")
-      if (roleInfoName) {
-        if ($scope.newUnit.rolesToSet.indexOf(roleInfoName) > -1) {
-          return object.get('name')
-        }
-      }
-    });
+    // var rolesNames = $filter('filter')($scope.roles, function(object) {
+    //   var roleInfoName = object.get('info') && object.get('info').get("name")
+    //   if (roleInfoName) {
+    //     if ($scope.newUnit.rolesToSet.indexOf(roleInfoName) > -1) {
+    //       return object.get('name')
+    //     }
+    //   }
+    // });
 
-    var rolesToUpdate = _.map(rolesNames, function(object) {
-      return object.get('name')
-    });
+    // var rolesToUpdate = _.map(rolesNames, function(object) {
+    //   return object.get('name')
+    // });
+
+    var rolesToUpdate = _.map($scope.newUnit.rolesToSet, function(role){
+      return $scope.facility.id + ' - ' + role
+    })
+
     rolesToUpdate.push("admin");
     var Unit = Parse.Object.extend("Unit");
     var unit = new Unit();
