@@ -2,14 +2,15 @@ angular.module('app').controller('facilitiesCtrl', ['$scope', '$filter', 'FlashM
 
   $scope.facilities = []
   $scope.facilitiesFetched = false;
-  $scope.newFacility = {
-    notifications: true
-  }
-
-  $scope.newFacility.varianceReasons = ["Pending Admissions",
+  var defaultVarianceReasons = ["Pending Admissions",
     "Pending Discharges", "1:1 Suicide Precautions", "1:1 Fall Risk",
     "Acuity High/Low - Specify", "Staffing Need Not Met - Specify"
   ]
+
+  $scope.newFacility = {
+    notifications: true,
+    varianceReasons: defaultVarianceReasons
+  }
 
   $scope.getFacility = function() {
     var Facility = Parse.Object.extend("Facility");
@@ -64,10 +65,13 @@ angular.module('app').controller('facilitiesCtrl', ['$scope', '$filter', 'FlashM
     facility.set("negativeNotificationThreshold", $scope.newFacility.negativeNotificationThreshold)
     facility.set("positiveNotificationThreshold", $scope.newFacility.positiveNotificationThreshold)
 
-
     facility.save(null, {
       success: function(facility) {
         $scope.facilities.push(facility)
+        $scope.newFacility = {
+          notifications: true,
+          varianceReasons: defaultVarianceReasons
+        }
         FlashMessage.show("New Facility has been created", true)
         $scope.$apply();
       },
