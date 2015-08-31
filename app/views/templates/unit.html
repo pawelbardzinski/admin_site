@@ -13,7 +13,7 @@
     <text class="coloured">Shift Times: </text>{{(shiftTimes | timestampToHHMMFilter).join(", ")}}
     <div ng-show="edit.toggle['shiftTimes']">
       <textarea class="small-top-margin" msd-elastic ng-model="editUnit.shiftTimes" ng-list="&#10;" ng-trim="false"></textarea>
-      <button type="submit" class="small-button small-top-margin small-left-margin" ng-click="updateUnit('shiftTimes')">
+      <button type="submit" class="small-button small-top-margin small-left-margin" ng-click="updateShiftTimes()">
         Update Shift Times
       </button>
     </div>
